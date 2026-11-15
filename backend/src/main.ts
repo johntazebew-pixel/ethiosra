@@ -8,8 +8,12 @@ import { existsSync, mkdirSync } from 'fs';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // 1. CORS: This allows the Next.js frontend to talk to this backend
-  app.enableCors();
+  // 1. CORS: Allow cross-origin requests from Vercel frontend and localhost
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
 
   // 2. Static File Serving for Uploaded Company Logos and Media
   const uploadDir = join(process.cwd(), 'uploads');

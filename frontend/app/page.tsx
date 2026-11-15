@@ -42,6 +42,7 @@ export default function Home() {
         setJobs(jobsResponse.data || []);
         setCategories(categoriesResponse.data || []);
       } catch (error) {
+        console.error("Failed to fetch jobs or categories from API:", error);
         setJobs([]);
         setCategories([]);
       } finally {

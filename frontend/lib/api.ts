@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const rawUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
+// Safely strip trailing slashes to prevent double slashes like //jobs
+const baseURL = rawUrl.replace(/\/+$/, "");
+
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333",
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },
