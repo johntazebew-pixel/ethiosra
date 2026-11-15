@@ -39,9 +39,8 @@ Thumbs.db
 .claude/
 .devin/
 
-# Uploads / user generated media
-uploads/
-*/uploads/
-!uploads/.gitkeep
-!*/uploads/.gitkeep
+# Uploaded user media files
+backend/uploads/
+!backend/uploads/.gitkeep
+!**/src/**/uploads/**
 
