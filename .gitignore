@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Production builds
+dist/
+build/
+.next/
+out/
+*/dist/
+*/build/
+*/.next/
+*/out/
+
+# Environment files
+.env
+.env.*
+!.env.example
+*.env
+
+# Cache & Logs
+*.log
+*.tsbuildinfo
+.npm/
+.turbo/
+logs/
+
+# Operating system / Office temporary files
+.DS_Store
+Thumbs.db
+~$*.docx
+~$*.doc
+
+# IDEs
+.vscode/
+.idea/
+.cursor/
+.agents/
+.claude/
+.devin/
+
+# Uploads / user generated media
+uploads/
+*/uploads/
+!uploads/.gitkeep
+!*/uploads/.gitkeep

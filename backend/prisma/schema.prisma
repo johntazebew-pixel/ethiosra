@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- ENUMS ---
+enum Role {
+  SUPERADMIN
+  ADMIN
+  JOB_SEEKER
+}
+
+enum JobStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  PENDING_DELETION
+}
+
+enum ApplicationMethod {
+  TELEGRAM
+  WEBSITE
+  EMAIL
+  GOOGLE_FORM
+}
+
+enum Language {
+  EN
+  AM
+}
+
+enum Theme {
+  LIGHT
+  DARK
+}
+
+// --- MODELS ---
+model User {
+  id                          String                 @id @default(uuid())
+  email                       String                 @unique
+  password                    String
+  role                        Role                   @default(JOB_SEEKER)
+
+  // Personal Information
+  fullName                    String?
+  phone                       String?
+  city                        String?
+  bio                         String?
+
+  // Professional & Career Details (EthioJobs Style)
+  currentTitle                String?
+  yearsOfExperience           Int?                   @default(0)
+  educationLevel              String?
+  fieldOfStudy                String?
+  skills                      String[]               @default([])
+  isAvailableForHire          Boolean                @default(true)
+
+  // Links & CV
+  resumeUrl                   String?
+  portfolioUrl                String?
+  linkedinUrl                 String?
+  githubUrl                   String?
+
+  // Preferences & Notifications
+  preferredLanguage           Language               @default(EN)
+  preferredTheme              Theme                  @default(LIGHT)
+  telegramChatId              String?                @unique
+  emailNotificationEnabled    Boolean                @default(true)
+  telegramNotificationEnabled Boolean                @default(false)
+
+  jobsCreated                 Job[]
+  favoriteCategories          UserFavoriteCategory[]
+  createdAt                   DateTime               @default(now())
+  updatedAt                   DateTime               @updatedAt
+}
+
+model Company {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  logoUrl     String?
+  description String?
+  website     String?
+  jobs        Job[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Category {
+  id    String                 @id @default(uuid())
+  name  String                 @unique
+  type  String
+  jobs  JobCategory[]
+  users UserFavoriteCategory[]
+}
+
+model Job {
+  id                 String            @id @default(uuid())
+  title              String
+  description        String
+  deadlineDate       DateTime
+  applicationMethod  ApplicationMethod
+  applicationUrl     String
+  status             JobStatus         @default(DRAFT)
+  isDeleted          Boolean           @default(false)
+  deletionReason     String?
+
+  // Professional Job Details (EthioJobs & LinkedIn Style)
+  location           String?           @default("Addis Ababa")
+  workplaceType      String?           @default("ON_SITE") // ON_SITE, HYBRID, REMOTE
+  employmentType     String?           @default("FULL_TIME") // FULL_TIME, PART_TIME, CONTRACT, INTERNSHIP, FREELANCE
+  experienceLevel    String?           @default("MID_LEVEL") // ENTRY_LEVEL, JUNIOR, MID_LEVEL, SENIOR, EXECUTIVE
+  minExperienceYears Int?              @default(0)
+  educationLevel     String?           @default("Bachelor's Degree (BA / BSc)")
+  positionsCount     Int?              @default(1)
+  salaryMin          Int?
+  salaryMax          Int?
+  salaryCurrency     String?           @default("ETB")
+  salaryPeriod       String?           @default("MONTHLY") // MONTHLY, YEARLY
+  isSalaryNegotiable Boolean           @default(true)
+  responsibilities   String?
+  qualifications     String?
+  skillsRequired     String[]          @default([])
+  benefits           String[]          @default([])
+  genderPreference   String?           @default("ANY") // ANY, FEMALE, MALE
+
+  companyId          String
+  company            Company           @relation(fields: [companyId], references: [id])
+  postedById         String
+  postedBy           User              @relation(fields: [postedById], references: [id])
+  categories         JobCategory[]
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+}
+
+// --- EXPLICIT JOIN TABLES ---
+
+model JobCategory {
+  jobId      String
+  categoryId String
+  job        Job      @relation(fields: [jobId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([jobId, categoryId])
+}
+
+model UserFavoriteCategory {
+  userId     String
+  categoryId String
+  user       User     @relation(fields: [userId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([userId, categoryId])
+}
+
+model SystemSettings {
+  id               Int      @id @default(1)
+  systemLogoUrl    String?
+  defaultLanguage  Language @default(EN)
+  heroBannerImages String[]
+  heroBannerVideos String[]
+  updatedAt        DateTime @updatedAt
+}
