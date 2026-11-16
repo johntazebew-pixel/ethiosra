@@ -1,35 +1,49 @@
-// ============================================================================
-// File Name: page.tsx
-// Exact Location: frontend/app/page.tsx
-// Description: Dynamic homepage with live search, category filtering, and job listings.
-// ============================================================================
-
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  Search,
-  MapPin,
+  ArrowRight,
   Briefcase,
-  TrendingUp,
-  Code,
-  Calculator,
-  HeartPulse,
   Building2,
+  Calculator,
   Calendar,
-  ExternalLink,
+  Code,
+  HeartPulse,
+  MapPin,
+  Search,
   Sparkles,
-  Filter,
+  TrendingUp,
+  UserRound,
   X,
 } from "lucide-react";
 import Link from "next/link";
 import { api } from "@/lib/api";
+import CompanyAvatar from "@/components/ui/CompanyAvatar";
+import type { Category, Company, Job } from "@/types";
+
+const categoryIcons = [
+  Code,
+  Calculator,
+  HeartPulse,
+  Briefcase,
+  TrendingUp,
+  Building2,
+];
+
+type HomeCategory = Pick<Category, "id" | "name"> & { type?: string };
+type HomeJob = Pick<Job, "id" | "title" | "description"> &
+  Partial<Pick<Job, "location" | "workplaceType" | "isSalaryNegotiable">> & {
+    company?: Pick<Company, "name" | "logoUrl">;
+    categories?: { category?: Pick<Category, "id" | "name"> }[];
+    deadlineDate?: string;
+  };
 
 export default function Home() {
-  const [jobs, setJobs] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<HomeJob[]>([]);
+  const [categories, setCategories] = useState<HomeCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchLocation, setSearchLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
@@ -49,348 +63,409 @@ export default function Home() {
         setLoading(false);
       }
     }
+
     fetchData();
   }, []);
 
-  // Filter jobs based on search query and category
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
+      const query = searchQuery.trim().toLowerCase();
       const matchesSearch =
-        searchQuery === "" ||
-        job.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.company?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.description?.toLowerCase().includes(searchQuery.toLowerCase());
-
+        !query ||
+        job.title?.toLowerCase().includes(query) ||
+        job.company?.name?.toLowerCase().includes(query) ||
+        job.description?.toLowerCase().includes(query);
       const matchesCategory =
         !selectedCategory ||
         job.categories?.some(
-          (c: any) =>
-            c.category?.name?.toLowerCase() === selectedCategory.toLowerCase()
+          (category) =>
+            category.category?.name?.toLowerCase() ===
+            selectedCategory.toLowerCase(),
         );
+      const matchesLocation =
+        !searchLocation ||
+        job.location?.toLowerCase() === searchLocation.toLowerCase();
 
-      return matchesSearch && matchesCategory;
+      return matchesSearch && matchesCategory && matchesLocation;
     });
-  }, [jobs, searchQuery, selectedCategory]);
+  }, [jobs, searchQuery, searchLocation, selectedCategory]);
 
-  const topCategories = categories.slice(0, 8);
+  const locations = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          jobs
+            .map((job) => job.location?.trim())
+            .filter((location): location is string => Boolean(location)),
+        ),
+      ).sort(),
+    [jobs],
+  );
+
+  const scrollToListings = () => {
+    document
+      .getElementById("job-listings")
+      ?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const resetFilters = () => {
+    setSearchQuery("");
+    setSearchLocation("");
+    setSelectedCategory(null);
+  };
 
   return (
-    <div className="flex flex-col items-center w-full bg-[#F3F7FE] min-h-screen">
-      {/* --- HERO SECTION --- */}
-      <section className="w-full bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] text-white py-24 md:py-32 px-4 relative overflow-hidden rounded-b-[3rem] shadow-2xl">
-        {/* Glow Spheres */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#185DF1] rounded-full mix-blend-screen filter blur-[120px] opacity-30 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-400 rounded-full mix-blend-screen filter blur-[130px] opacity-20 pointer-events-none"></div>
-
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md text-xs md:text-sm font-semibold mb-6 shadow-inner">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Over 1,000+ Opportunities Across Ethiopia</span>
+    <div className="min-h-screen bg-white">
+      <section className="mx-auto grid max-w-7xl gap-10 px-4 pb-12 pt-6 sm:px-6 md:grid-cols-[1.05fr_0.95fr] md:items-center md:pb-16 md:pt-8 lg:px-8">
+        <div>
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3.5 py-2 text-sm font-medium text-neutral-700">
+            <span className="h-2 w-2 rounded-full bg-neutral-900" />
+            Find your next opportunity
           </div>
-
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
-            Discover Your Next <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-white to-blue-300">
-              Career Journey
-            </span>
+          <h1 className="max-w-3xl text-4xl font-medium leading-[1.08] tracking-[-0.045em] text-neutral-950 sm:text-5xl lg:text-6xl">
+            Get hired faster
+            <br />
+            and smarter.
           </h1>
-
-          <p className="text-base sm:text-lg md:text-xl text-blue-100/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-            EthioSira connects skilled professionals with top companies, institutions, and startups in Ethiopia.
+          <p className="mt-4 max-w-xl text-base leading-7 text-neutral-500 sm:text-lg">
+            Browse, search, and apply for trusted jobs across Ethiopia.
           </p>
 
-          {/* Interactive Search Bar */}
-          <div className="bg-white p-2.5 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row items-center gap-2 max-w-3xl mx-auto border border-white/40">
-            <div className="flex-1 flex items-center gap-3 px-4 py-3 w-full md:w-auto">
-              <Search className="text-[#185DF1] shrink-0" size={22} />
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              scrollToListings();
+            }}
+            className="mt-7 grid gap-2 rounded-[1.35rem] border border-neutral-200 bg-white p-2 shadow-[0_18px_55px_-35px_rgba(0,0,0,0.35)] sm:grid-cols-[1fr_0.8fr_auto] sm:items-center"
+          >
+            <div className="flex min-w-0 items-center gap-3 rounded-xl px-3">
+              <Search size={18} className="shrink-0 text-neutral-500" />
               <input
-                type="text"
+                type="search"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search job title, company, or keyword..."
-                className="w-full bg-transparent text-[#031130] font-medium outline-none placeholder:text-slate-400 text-sm md:text-base"
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Job title or keyword"
+                aria-label="Search jobs"
+                className="h-12 w-full min-w-0 bg-transparent text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="text-slate-400 hover:text-slate-600 p-1"
+                  aria-label="Clear search"
+                  className="rounded-full p-1 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-700"
                 >
                   <X size={16} />
                 </button>
               )}
             </div>
-
+            <label className="flex min-w-0 items-center gap-3 rounded-xl border-t border-neutral-100 px-3 sm:border-l sm:border-t-0">
+              <MapPin size={18} className="shrink-0 text-neutral-500" />
+              <select
+                value={searchLocation}
+                onChange={(event) => setSearchLocation(event.target.value)}
+                aria-label="Filter by location"
+                className="h-12 w-full min-w-0 appearance-none bg-transparent text-sm text-neutral-800 outline-none"
+              >
+                <option value="">All locations</option>
+                {locations.map((location) => (
+                  <option key={location} value={location}>
+                    {location}
+                  </option>
+                ))}
+              </select>
+            </label>
             <button
-              type="button"
-              onClick={() => {
-                const element = document.getElementById("job-listings");
-                element?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="w-full md:w-auto bg-[#185DF1] hover:bg-[#031130] text-white font-bold py-3.5 px-8 rounded-xl md:rounded-full transition-all duration-300 shadow-md hover:shadow-lg shrink-0 text-sm md:text-base"
+              type="submit"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-neutral-950 px-5 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 focus-visible:outline-offset-2"
             >
-              Search Opportunities
+              Search jobs <Search size={16} />
             </button>
-          </div>
+          </form>
 
-          {/* Quick stats banner */}
-          <div className="mt-12 grid grid-cols-3 max-w-2xl mx-auto gap-4 pt-8 border-t border-white/10 text-center">
-            <div>
-              <p className="text-2xl md:text-3xl font-extrabold text-white">{jobs.length}</p>
-              <p className="text-xs md:text-sm text-blue-200/80">Active Listings</p>
-            </div>
-            <div>
-              <p className="text-2xl md:text-3xl font-extrabold text-white">{categories.length}</p>
-              <p className="text-xs md:text-sm text-blue-200/80">Specialties</p>
-            </div>
-            <div>
-              <p className="text-2xl md:text-3xl font-extrabold text-white">100%</p>
-              <p className="text-xs md:text-sm text-blue-200/80">Verified Employers</p>
-            </div>
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-neutral-500">
+            <span>{jobs.length} opportunities</span>
+            <span>{categories.length} career categories</span>
+            <span>Made for Ethiopia</span>
           </div>
         </div>
-      </section>
 
-      {/* --- QUICK CATEGORIES SECTION --- */}
-      <section className="w-full max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-[#185DF1] font-bold text-sm tracking-wider uppercase mb-1">
-              <Sparkles size={16} />
-              <span>Explore Roles</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#031130] tracking-tight">
-              Popular Categories
-            </h2>
-            <p className="text-slate-500 mt-2 text-base">
-              Click a sector to filter live job listings instantly.
-            </p>
-          </div>
-
-          {selectedCategory && (
-            <button
-              type="button"
-              onClick={() => setSelectedCategory(null)}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 px-3.5 py-2 rounded-xl transition-colors"
-            >
-              <X size={14} /> Clear Category Filter ({selectedCategory})
-            </button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {loading ? (
-            <div className="col-span-full py-12 text-center text-slate-400 font-medium bg-white rounded-3xl border border-slate-200">
-              Loading categories...
-            </div>
-          ) : topCategories.length > 0 ? (
-            topCategories.map((cat: any, idx: number) => {
-              const icons = [Code, Calculator, HeartPulse, Briefcase, TrendingUp, Building2];
-              const Icon = icons[idx % icons.length];
-              const isSelected =
-                selectedCategory?.toLowerCase() === cat.name?.toLowerCase();
-
-              return (
-                <div
-                  key={cat.id}
-                  onClick={() =>
-                    setSelectedCategory(isSelected ? null : cat.name)
-                  }
-                  className={`p-6 rounded-3xl border transition-all duration-300 cursor-pointer group flex flex-col justify-between ${
-                    isSelected
-                      ? "bg-gradient-to-br from-[#185DF1] to-[#0a40aa] text-white shadow-xl shadow-blue-500/20 border-transparent scale-[1.02]"
-                      : "bg-white border-slate-200/80 hover:border-[#185DF1]/40 hover:shadow-xl hover:-translate-y-1"
-                  }`}
-                >
-                  <div
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-colors ${
-                      isSelected
-                        ? "bg-white/20 text-white"
-                        : "bg-[#F3F7FE] text-[#185DF1] group-hover:bg-[#185DF1] group-hover:text-white"
-                    }`}
-                  >
-                    <Icon size={26} />
-                  </div>
-                  <div>
-                    <h3
-                      className={`text-lg font-bold mb-1 ${
-                        isSelected ? "text-white" : "text-[#031130]"
-                      }`}
-                    >
-                      {cat.name}
-                    </h3>
-                    <p
-                      className={`text-xs font-medium ${
-                        isSelected ? "text-blue-100" : "text-slate-400"
-                      }`}
-                    >
-                      {cat.type === "DEPARTMENT" ? "Department" : "Specialty"}
-                    </p>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="col-span-full py-12 text-center text-slate-500 font-medium bg-white rounded-3xl border border-slate-200">
-              No categories found.
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* --- ALL JOB LISTINGS SECTION --- */}
-      <section
-        id="job-listings"
-        className="w-full bg-white py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-200/60"
-      >
-        <div className="max-w-7xl mx-auto">
-          {/* Section Header with dynamic count */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
-            <div>
-              <div className="flex items-center gap-2 text-[#185DF1] font-bold text-sm tracking-wider uppercase mb-1">
-                <Briefcase size={16} />
-                <span>Verified Jobs</span>
+        <div className="relative hidden min-h-[390px] items-center justify-center overflow-hidden rounded-[2rem] bg-neutral-50 p-8 md:flex">
+          <div className="absolute right-[12%] top-8 h-[310px] w-[250px] rounded-[48%] bg-neutral-200/80" />
+          <div className="absolute right-[18%] top-14 h-[295px] w-[225px] rounded-[2rem] border border-neutral-200 bg-white p-4 shadow-[0_24px_70px_-38px_rgba(0,0,0,0.3)]">
+            <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
+              <div className="flex gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-300" />
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-300" />
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-300" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-[#031130] tracking-tight">
-                {selectedCategory
-                  ? `${selectedCategory} Positions`
-                  : "All Open Positions"}
-              </h2>
-              <p className="text-slate-500 mt-2 text-base">
-                Showing {filteredJobs.length} {filteredJobs.length === 1 ? "position" : "positions"}
-                {searchQuery ? ` matching "${searchQuery}"` : ""}.
-              </p>
+              <span className="text-[10px] font-semibold text-neutral-400">ETHIOSIRA</span>
             </div>
+            <div className="mt-5 rounded-2xl bg-neutral-50 px-4 py-5 text-center">
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-neutral-200 text-neutral-700">
+                <UserRound size={36} strokeWidth={1.5} />
+              </div>
+              <p className="mt-3 text-sm font-semibold text-neutral-900">Your next role</p>
+              <p className="mt-1 text-xs text-neutral-500">is closer than you think</p>
+            </div>
+            <div className="mt-4 flex items-center justify-between rounded-xl border border-neutral-200 px-3 py-2.5">
+              <div className="flex items-center gap-2">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-neutral-900 text-white">
+                  <Briefcase size={14} />
+                </span>
+                <span className="text-xs font-medium text-neutral-700">Explore jobs</span>
+              </div>
+              <ArrowRight size={15} className="text-neutral-500" />
+            </div>
+          </div>
+          <div className="absolute left-5 top-[28%] w-48 rounded-2xl border border-neutral-200 bg-white p-4 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)]">
+            <div className="flex items-center gap-2">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-neutral-100 text-neutral-700">
+                <Briefcase size={17} />
+              </span>
+              <div>
+                <p className="text-xs font-semibold text-neutral-900">For your career</p>
+                <p className="text-[11px] text-neutral-500">Opportunities that fit</p>
+              </div>
+            </div>
+            <div className="mt-4 h-1.5 rounded-full bg-neutral-100">
+              <div className="h-1.5 w-3/4 rounded-full bg-neutral-800" />
+            </div>
+          </div>
+          <div className="absolute bottom-7 left-6 flex items-center gap-3 rounded-full border border-neutral-200 bg-white px-4 py-2.5 shadow-sm">
+            <Sparkles size={16} className="text-neutral-700" />
+            <span className="text-xs font-semibold text-neutral-700">
+              {jobs.length} open roles to explore
+            </span>
+          </div>
+        </div>
+      </section>
 
-            {/* Quick reset if filter active */}
-            {(searchQuery || selectedCategory) && (
+      <section className="border-y border-[#E5E5E5] bg-white/70">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-800">
+                Browse by interest
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#111111] sm:text-3xl">
+                Explore career categories
+              </h2>
+            </div>
+            {selectedCategory && (
               <button
                 type="button"
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory(null);
-                }}
-                className="text-sm font-bold text-[#185DF1] hover:underline flex items-center gap-1"
+                onClick={() => setSelectedCategory(null)}
+                className="inline-flex items-center gap-1.5 self-start rounded-full border border-neutral-900/10 px-3 py-1.5 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 sm:self-auto"
               >
-                Reset All Filters
+                <X size={14} /> Clear {selectedCategory}
               </button>
             )}
           </div>
 
-          {/* Job Cards */}
-          <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {loading ? (
-              <div className="py-16 text-center text-slate-400 font-medium bg-slate-50 rounded-3xl border border-slate-200">
-                Loading job listings...
+              <div className="col-span-full rounded-2xl border border-dashed border-slate-300 py-10 text-center text-sm text-slate-500">
+                Loading categories…
               </div>
-            ) : filteredJobs.length > 0 ? (
-              filteredJobs.map((job: any) => (
-                <div
-                  key={job.id}
-                  className="bg-white border border-slate-200/90 hover:border-[#185DF1]/50 p-6 md:p-7 rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 group"
-                >
-                  <div className="flex items-start md:items-center gap-5">
-                    {/* Company Initial / Logo Circle */}
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center font-extrabold text-xl text-[#185DF1] border border-blue-200/50 uppercase shrink-0 shadow-sm">
-                      {job.company?.name ? job.company.name.substring(0, 2) : "Co"}
-                    </div>
+            ) : categories.length ? (
+              categories.slice(0, 8).map((category, index) => {
+                const Icon = categoryIcons[index % categoryIcons.length];
+                const isSelected =
+                  selectedCategory?.toLowerCase() ===
+                  category.name?.toLowerCase();
 
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <h3 className="text-xl font-bold text-[#031130] group-hover:text-[#185DF1] transition-colors">
-                          {job.title}
-                        </h3>
-                        {job.workplaceType && (
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
-                            {job.workplaceType}
-                          </span>
-                        )}
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-md border border-slate-200">
-                          {job.applicationMethod}
-                        </span>
-                      </div>
-
-                      <p className="text-slate-600 font-medium text-sm flex flex-wrap items-center gap-2 mb-2">
-                        <span className="flex items-center gap-1 font-bold text-[#185DF1]">
-                          <Building2 size={16} />
-                          <span>{job.company?.name || "Independent Employer"}</span>
-                        </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1 text-slate-500 text-xs">
-                          <MapPin size={13} /> {job.location || "Addis Ababa"}
-                        </span>
-                        {job.isSalaryNegotiable && (
-                          <>
-                            <span>•</span>
-                            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
-                              Negotiable
-                            </span>
-                          </>
-                        )}
-                      </p>
-
-                      {/* Multi-Categories Tags */}
-                      {job.categories && job.categories.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 mb-2">
-                          {job.categories.slice(0, 3).map((jc: any, cIdx: number) => (
-                            <span
-                              key={cIdx}
-                              className="text-[10px] font-bold text-[#185DF1] bg-blue-50 px-2 py-0.5 rounded border border-blue-100"
-                            >
-                              {jc.category?.name}
-                            </span>
-                          ))}
-                          {job.categories.length > 3 && (
-                            <span className="text-[10px] text-slate-400 self-center">
-                              +{job.categories.length - 3} more
-                            </span>
-                          )}
-                        </div>
-                      )}
-
-                      <p className="text-slate-500 text-sm line-clamp-2 max-w-2xl font-light">
-                        {job.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Actions & Deadline */}
-                  <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-3 shrink-0 pt-4 md:pt-0 border-t md:border-t-0 border-slate-100">
-                    <span className="text-xs text-slate-400 font-medium flex items-center gap-1">
-                      <Calendar size={14} /> Deadline: {new Date(job.deadlineDate).toLocaleDateString()}
-                    </span>
-                    <Link
-                      href={`/jobs/${job.id}`}
-                      className="bg-[#F3F7FE] text-[#185DF1] hover:bg-[#185DF1] hover:text-white font-bold py-2.5 px-6 rounded-xl transition-all duration-200 text-sm shadow-sm inline-flex items-center gap-1.5"
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    aria-pressed={isSelected}
+                    onClick={() =>
+                      setSelectedCategory(isSelected ? null : category.name)
+                    }
+                    className={`group flex min-h-32 flex-col items-start justify-between rounded-2xl border p-4 text-left transition-colors sm:p-5 ${
+                      isSelected
+                        ? "border-neutral-800 bg-neutral-800 text-white"
+                        : "border-[#E5E5E5] bg-white hover:border-neutral-700/40 hover:bg-neutral-50/50"
+                    }`}
+                  >
+                    <span
+                      className={`mb-5 inline-flex h-10 w-10 items-center justify-center rounded-xl ${
+                        isSelected
+                          ? "bg-white/15 text-white"
+                          : "bg-[#F4F4F4] text-neutral-800"
+                      }`}
                     >
-                      <span>View Details</span>
-                      <ExternalLink size={14} />
-                    </Link>
-                  </div>
-                </div>
-              ))
+                      <Icon size={19} />
+                    </span>
+                    <span className="font-semibold leading-snug">
+                      {category.name}
+                    </span>
+                    <span
+                      className={`mt-1 text-xs ${
+                        isSelected ? "text-neutral-50/75" : "text-slate-500"
+                      }`}
+                    >
+                      {category.type === "DEPARTMENT"
+                        ? "Department"
+                        : "Specialty"}
+                    </span>
+                  </button>
+                );
+              })
             ) : (
-              <div className="py-20 text-center bg-slate-50 rounded-3xl border border-slate-200 p-8">
-                <Briefcase size={44} className="mx-auto text-slate-300 mb-3" />
-                <h3 className="text-xl font-bold text-slate-700 mb-1">
-                  No matching jobs found
-                </h3>
-                <p className="text-slate-400 text-sm max-w-md mx-auto mb-6">
-                  Try adjusting your search query or selecting a different category to see available opportunities.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedCategory(null);
-                  }}
-                  className="bg-[#185DF1] text-white font-bold py-2.5 px-6 rounded-xl text-sm"
-                >
-                  Show All Jobs
-                </button>
+              <div className="col-span-full rounded-2xl border border-dashed border-slate-300 py-10 text-center text-sm text-slate-500">
+                Categories will appear here as they become available.
               </div>
             )}
           </div>
+        </div>
+      </section>
+
+      <section
+        id="job-listings"
+        className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8"
+      >
+        <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-800">
+              The latest opportunities
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#111111] sm:text-3xl">
+              {selectedCategory ? `${selectedCategory} jobs` : "Open positions"}
+            </h2>
+            <p className="mt-2 text-sm text-slate-500">
+              {filteredJobs.length}{" "}
+              {filteredJobs.length === 1 ? "role" : "roles"}
+              {searchQuery ? ` matching “${searchQuery}”` : " to explore"}
+            </p>
+          </div>
+          {(searchQuery || selectedCategory) && (
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="self-start text-sm font-semibold text-neutral-800 hover:text-neutral-950 sm:self-auto"
+            >
+              Reset filters
+            </button>
+          )}
+        </div>
+
+        <div className="space-y-3">
+          {loading ? (
+            <div className="rounded-2xl border border-[#E5E5E5] bg-white py-14 text-center text-sm text-slate-500">
+              Loading job listings…
+            </div>
+          ) : filteredJobs.length ? (
+            filteredJobs.map((job) => {
+              const categories = job.categories ?? [];
+
+              return (
+                <article
+                  key={job.id}
+                  className="rounded-2xl border border-[#E5E5E5] bg-white p-5 transition-shadow hover:shadow-[0_12px_36px_-24px_rgba(0,0,0,0.4)] sm:p-6"
+                >
+                  <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+                    <div className="flex min-w-0 flex-1 items-start gap-4">
+                      <CompanyAvatar
+                        name={job.company?.name}
+                        logoUrl={job.company?.logoUrl}
+                        fallback="Co"
+                        className="h-14 w-14 shrink-0 rounded-xl border border-neutral-900/10 bg-neutral-50 text-lg text-neutral-800"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="text-lg font-semibold leading-snug text-[#111111]">
+                            {job.title}
+                          </h3>
+                          {job.workplaceType && (
+                            <span className="rounded-full bg-neutral-50 px-2.5 py-1 text-[11px] font-medium text-neutral-800">
+                              {job.workplaceType}
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-600">
+                          <span className="inline-flex items-center gap-1.5 font-medium text-slate-700">
+                            <Building2 size={15} className="text-neutral-800" />
+                            {job.company?.name || "Independent employer"}
+                          </span>
+                          <span className="inline-flex items-center gap-1">
+                            <MapPin size={14} />
+                            {job.location || "Addis Ababa"}
+                          </span>
+                        </p>
+                        {categories.length > 0 && (
+                          <div className="mt-3 flex flex-wrap gap-1.5">
+                            {categories.slice(0, 3).map((item, index) => (
+                              <span
+                                key={item.category?.id || index}
+                                className="rounded-md bg-[#F5F5F5] px-2 py-1 text-xs text-slate-600"
+                              >
+                                {item.category?.name}
+                              </span>
+                            ))}
+                            {categories.length > 3 && (
+                              <span className="px-1 py-1 text-xs text-slate-500">
+                                +{categories.length - 3}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                        {job.description && (
+                          <p className="mt-3 line-clamp-2 max-w-3xl text-sm leading-6 text-slate-500">
+                            {job.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4 border-t border-slate-100 pt-4 sm:w-48 sm:flex-col sm:items-end sm:justify-center sm:border-0 sm:pt-0">
+                      <div className="text-right">
+                        {job.deadlineDate && (
+                          <p className="inline-flex items-center gap-1.5 text-xs text-slate-500">
+                            <Calendar size={13} />
+                            Closes{" "}
+                            {new Date(job.deadlineDate).toLocaleDateString()}
+                          </p>
+                        )}
+                        {job.isSalaryNegotiable && (
+                          <p className="mt-1 text-xs font-medium text-neutral-800">
+                            Salary negotiable
+                          </p>
+                        )}
+                      </div>
+                      <Link
+                        href={`/jobs/${job.id}`}
+                        className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-[#F4F4F4] px-4 py-2.5 text-sm font-semibold text-neutral-900 transition-colors hover:bg-neutral-800 hover:text-white"
+                      >
+                        View role <ArrowRight size={15} />
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              );
+            })
+          ) : (
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-14 text-center">
+              <Briefcase size={28} className="mx-auto text-slate-400" />
+              <h3 className="mt-4 font-semibold text-[#111111]">
+                No matching roles yet
+              </h3>
+              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+                Try another search or clear your filters to see all available
+                opportunities.
+              </p>
+              {(searchQuery || selectedCategory) && (
+                <button
+                  type="button"
+                  onClick={resetFilters}
+                  className="mt-5 rounded-lg bg-[#111111] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#2D2D2D]"
+                >
+                  Show all jobs
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </section>
     </div>

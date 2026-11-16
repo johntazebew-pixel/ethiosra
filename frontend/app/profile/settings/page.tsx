@@ -239,9 +239,9 @@ export default function ProfileSettingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F3F7FE] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F7F7F7] flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#185DF1] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-12 h-12 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-slate-500 font-medium">Loading your profile & career details...</p>
         </div>
       </div>
@@ -249,13 +249,13 @@ export default function ProfileSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       {/* --- HERO HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-12 pb-24 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-12 pb-24 px-4 text-white">
         <div className="max-w-5xl mx-auto">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium mb-6 text-sm transition-colors"
+            className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium mb-6 text-sm transition-colors"
           >
             <ArrowLeft size={16} /> Back to homepage
           </Link>
@@ -264,13 +264,13 @@ export default function ProfileSettingsPage() {
             <div className="flex items-center gap-5">
               {/* Profile Avatar Circle */}
               <div className="relative">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-2xl shadow-xl border-4 border-white/20">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-neutral-500 to-neutral-600 flex items-center justify-center text-white font-black text-2xl shadow-xl border-4 border-white/20">
                   {getInitials(fullName, email)}
                 </div>
                 {isAvailableForHire && (
                   <span
                     title="Available for immediate hiring"
-                    className="absolute bottom-0 right-0 w-5 h-5 bg-emerald-400 border-2 border-white rounded-full"
+                    className="absolute bottom-0 right-0 w-5 h-5 bg-neutral-400 border-2 border-white rounded-full"
                   ></span>
                 )}
               </div>
@@ -284,7 +284,7 @@ export default function ProfileSettingsPage() {
                     {role}
                   </span>
                 </div>
-                <p className="text-blue-100/90 text-sm flex flex-wrap items-center gap-2">
+                <p className="text-neutral-100/90 text-sm flex flex-wrap items-center gap-2">
                   <span>{currentTitle || "Career Candidate"}</span>
                   <span>•</span>
                   <span className="flex items-center gap-1">
@@ -297,18 +297,18 @@ export default function ProfileSettingsPage() {
             {/* Profile Completion Meter */}
             <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/15 min-w-[240px]">
               <div className="flex justify-between items-center text-xs font-bold mb-2">
-                <span className="text-blue-100 flex items-center gap-1">
+                <span className="text-neutral-100 flex items-center gap-1">
                   <Sparkles size={14} className="text-amber-300" /> Profile Strength
                 </span>
                 <span className="text-white">{completionPercentage}%</span>
               </div>
               <div className="w-full bg-white/20 h-2.5 rounded-full overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-emerald-400 to-teal-300 h-full rounded-full transition-all duration-500"
+                  className="bg-gradient-to-r from-neutral-400 to-neutral-300 h-full rounded-full transition-all duration-500"
                   style={{ width: `${completionPercentage}%` }}
                 ></div>
               </div>
-              <p className="text-[11px] text-blue-200/70 mt-1.5">
+              <p className="text-[11px] text-neutral-200/70 mt-1.5">
                 {completionPercentage === 100
                   ? "Your profile is 100% complete!"
                   : "Add more details to boost recruiter visibility."}
@@ -338,7 +338,7 @@ export default function ProfileSettingsPage() {
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`flex items-center gap-2 py-3 px-4 font-bold text-sm rounded-t-2xl border-b-2 transition-all duration-200 whitespace-nowrap ${
                     isActive
-                      ? "bg-white text-[#185DF1] border-[#185DF1] shadow-sm -mb-[2px]"
+                      ? "bg-white text-[#111111] border-[#111111] shadow-sm -mb-[2px]"
                       : "text-slate-500 hover:text-slate-800 border-transparent"
                   }`}
                 >
@@ -352,8 +352,8 @@ export default function ProfileSettingsPage() {
           {/* Form Body */}
           <form onSubmit={handleSaveProfile} className="p-6 md:p-10 space-y-8">
             {successMessage && (
-              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
-                <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
+              <div className="bg-neutral-50 border border-neutral-200 text-neutral-800 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
+                <CheckCircle2 size={20} className="text-neutral-500 shrink-0" />
                 <span>{successMessage}</span>
               </div>
             )}
@@ -368,8 +368,8 @@ export default function ProfileSettingsPage() {
             {activeTab === "personal" && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-bold text-[#031130] flex items-center gap-2 mb-1">
-                    <User size={20} className="text-[#185DF1]" /> Personal Information
+                  <h3 className="text-xl font-bold text-[#111111] flex items-center gap-2 mb-1">
+                    <User size={20} className="text-[#111111]" /> Personal Information
                   </h3>
                   <p className="text-slate-500 text-sm">
                     Basic contact information so employers can reach you.
@@ -389,7 +389,7 @@ export default function ProfileSettingsPage() {
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder="e.g. Abebe Bikila"
-                        className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                        className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                       />
                     </div>
                   </div>
@@ -422,7 +422,7 @@ export default function ProfileSettingsPage() {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="e.g. +251 91 123 4567"
-                        className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                        className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                       />
                     </div>
                   </div>
@@ -437,7 +437,7 @@ export default function ProfileSettingsPage() {
                       <select
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                        className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                       >
                         {ETHIOPIAN_CITIES.map((c) => (
                           <option key={c} value={c}>
@@ -459,7 +459,7 @@ export default function ProfileSettingsPage() {
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     placeholder="Briefly introduce yourself, your primary expertise, and the kind of roles you are seeking..."
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-2xl p-4 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm leading-relaxed"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-2xl p-4 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm leading-relaxed"
                   ></textarea>
                 </div>
               </div>
@@ -469,8 +469,8 @@ export default function ProfileSettingsPage() {
             {activeTab === "career" && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-bold text-[#031130] flex items-center gap-2 mb-1">
-                    <Briefcase size={20} className="text-[#185DF1]" /> Career & Professional Experience
+                  <h3 className="text-xl font-bold text-[#111111] flex items-center gap-2 mb-1">
+                    <Briefcase size={20} className="text-[#111111]" /> Career & Professional Experience
                   </h3>
                   <p className="text-slate-500 text-sm">
                     Highlight your experience, education, and skills.
@@ -488,7 +488,7 @@ export default function ProfileSettingsPage() {
                       value={currentTitle}
                       onChange={(e) => setCurrentTitle(e.target.value)}
                       placeholder="e.g. Senior Software Engineer or Financial Analyst"
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                     />
                   </div>
 
@@ -500,7 +500,7 @@ export default function ProfileSettingsPage() {
                     <select
                       value={yearsOfExperience}
                       onChange={(e) => setYearsOfExperience(Number(e.target.value))}
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                     >
                       <option value={0}>0 - Fresh Graduate / Entry Level</option>
                       <option value={1}>1 Year</option>
@@ -520,7 +520,7 @@ export default function ProfileSettingsPage() {
                     <select
                       value={educationLevel}
                       onChange={(e) => setEducationLevel(e.target.value)}
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                     >
                       {EDUCATION_LEVELS.map((ed) => (
                         <option key={ed} value={ed}>
@@ -540,7 +540,7 @@ export default function ProfileSettingsPage() {
                       value={fieldOfStudy}
                       onChange={(e) => setFieldOfStudy(e.target.value)}
                       placeholder="e.g. Computer Science, Accounting, Economics"
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                     />
                   </div>
                 </div>
@@ -555,7 +555,7 @@ export default function ProfileSettingsPage() {
                     value={skillsInput}
                     onChange={(e) => setSkillsInput(e.target.value)}
                     placeholder="e.g. React, TypeScript, Financial Analysis, Project Management, Python, SQL"
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                   />
                   {skillsInput.trim() && (
                     <div className="flex flex-wrap gap-2 mt-3">
@@ -566,7 +566,7 @@ export default function ProfileSettingsPage() {
                         .map((skill, idx) => (
                           <span
                             key={idx}
-                            className="inline-flex items-center gap-1 bg-blue-50 text-[#185DF1] border border-blue-200 px-3 py-1 rounded-lg text-xs font-bold"
+                            className="inline-flex items-center gap-1 bg-neutral-50 text-[#111111] border border-neutral-200 px-3 py-1 rounded-lg text-xs font-bold"
                           >
                             <Award size={12} />
                             {skill}
@@ -577,10 +577,10 @@ export default function ProfileSettingsPage() {
                 </div>
 
                 {/* Job Search Status Toggle */}
-                <div className="p-5 bg-emerald-50/70 border border-emerald-200/80 rounded-2xl flex items-center justify-between gap-4">
+                <div className="p-5 bg-neutral-50/70 border border-neutral-200/80 rounded-2xl flex items-center justify-between gap-4">
                   <div>
-                    <p className="font-bold text-emerald-950 text-sm">Available for Immediate Hire</p>
-                    <p className="text-emerald-800/80 text-xs mt-0.5">
+                    <p className="font-bold text-neutral-950 text-sm">Available for Immediate Hire</p>
+                    <p className="text-neutral-800/80 text-xs mt-0.5">
                       Show employers that you are actively exploring and open to interview offers.
                     </p>
                   </div>
@@ -588,7 +588,7 @@ export default function ProfileSettingsPage() {
                     type="checkbox"
                     checked={isAvailableForHire}
                     onChange={(e) => setIsAvailableForHire(e.target.checked)}
-                    className="w-5 h-5 accent-[#185DF1] rounded cursor-pointer"
+                    className="w-5 h-5 accent-[#111111] rounded cursor-pointer"
                   />
                 </div>
               </div>
@@ -598,8 +598,8 @@ export default function ProfileSettingsPage() {
             {activeTab === "resume" && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-bold text-[#031130] flex items-center gap-2 mb-1">
-                    <FileText size={20} className="text-[#185DF1]" /> Resume & Portfolio Links
+                  <h3 className="text-xl font-bold text-[#111111] flex items-center gap-2 mb-1">
+                    <FileText size={20} className="text-[#111111]" /> Resume & Portfolio Links
                   </h3>
                   <p className="text-slate-500 text-sm">
                     Provide links to your CV, GitHub, or LinkedIn so employers can evaluate your work.
@@ -619,7 +619,7 @@ export default function ProfileSettingsPage() {
                         value={resumeUrl}
                         onChange={(e) => setResumeUrl(e.target.value)}
                         placeholder="https://drive.google.com/file/d/.../view"
-                        className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                        className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                       />
                     </div>
                   </div>
@@ -638,7 +638,7 @@ export default function ProfileSettingsPage() {
                         value={linkedinUrl}
                         onChange={(e) => setLinkedinUrl(e.target.value)}
                         placeholder="https://linkedin.com/in/yourusername"
-                        className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                        className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                       />
                     </div>
                   </div>
@@ -655,7 +655,7 @@ export default function ProfileSettingsPage() {
                         value={portfolioUrl}
                         onChange={(e) => setPortfolioUrl(e.target.value)}
                         placeholder="https://yourportfolio.com"
-                        className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                        className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                       />
                     </div>
                   </div>
@@ -674,7 +674,7 @@ export default function ProfileSettingsPage() {
                         value={githubUrl}
                         onChange={(e) => setGithubUrl(e.target.value)}
                         placeholder="https://github.com/yourusername"
-                        className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                        className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                       />
                     </div>
                   </div>
@@ -686,8 +686,8 @@ export default function ProfileSettingsPage() {
             {activeTab === "preferences" && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-bold text-[#031130] flex items-center gap-2 mb-1">
-                    <Globe size={20} className="text-[#185DF1]" /> Preferences & Alerts
+                  <h3 className="text-xl font-bold text-[#111111] flex items-center gap-2 mb-1">
+                    <Globe size={20} className="text-[#111111]" /> Preferences & Alerts
                   </h3>
                   <p className="text-slate-500 text-sm">
                     Customize your language, notifications, and Telegram job alerts.
@@ -703,7 +703,7 @@ export default function ProfileSettingsPage() {
                     <select
                       value={preferredLanguage}
                       onChange={(e) => setPreferredLanguage(e.target.value)}
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                     >
                       <option value="EN">English (EN)</option>
                       <option value="AM">አማርኛ - Amharic (AM)</option>
@@ -718,7 +718,7 @@ export default function ProfileSettingsPage() {
                     <select
                       value={preferredTheme}
                       onChange={(e) => setPreferredTheme(e.target.value)}
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                     >
                       <option value="LIGHT">Light Theme</option>
                       <option value="DARK">Dark Theme</option>
@@ -727,8 +727,8 @@ export default function ProfileSettingsPage() {
                 </div>
 
                 {/* Telegram Alerts */}
-                <div className="p-6 bg-blue-50/60 border border-blue-200/80 rounded-2xl space-y-3">
-                  <div className="flex items-center gap-2 text-[#185DF1] font-bold text-sm">
+                <div className="p-6 bg-neutral-50/60 border border-neutral-200/80 rounded-2xl space-y-3">
+                  <div className="flex items-center gap-2 text-[#111111] font-bold text-sm">
                     <Send size={18} />
                     <span>Telegram Job Alerts Integration</span>
                   </div>
@@ -740,30 +740,30 @@ export default function ProfileSettingsPage() {
                     value={telegramChatId}
                     onChange={(e) => setTelegramChatId(e.target.value)}
                     placeholder="e.g. 123456789 (From @userinfobot)"
-                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#111111]"
                   />
                 </div>
 
                 {/* Notification Toggles */}
                 <div className="space-y-3 pt-2">
-                  <label className="flex items-center gap-3 p-3 bg-[#F3F7FE] rounded-xl border border-slate-200 cursor-pointer">
+                  <label className="flex items-center gap-3 p-3 bg-[#F7F7F7] rounded-xl border border-slate-200 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={emailNotificationEnabled}
                       onChange={(e) => setEmailNotificationEnabled(e.target.checked)}
-                      className="w-4 h-4 accent-[#185DF1] rounded cursor-pointer"
+                      className="w-4 h-4 accent-[#111111] rounded cursor-pointer"
                     />
                     <span className="text-sm font-semibold text-slate-700">
                       Receive weekly email digest of recommended jobs
                     </span>
                   </label>
 
-                  <label className="flex items-center gap-3 p-3 bg-[#F3F7FE] rounded-xl border border-slate-200 cursor-pointer">
+                  <label className="flex items-center gap-3 p-3 bg-[#F7F7F7] rounded-xl border border-slate-200 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={telegramNotificationEnabled}
                       onChange={(e) => setTelegramNotificationEnabled(e.target.checked)}
-                      className="w-4 h-4 accent-[#185DF1] rounded cursor-pointer"
+                      className="w-4 h-4 accent-[#111111] rounded cursor-pointer"
                     />
                     <span className="text-sm font-semibold text-slate-700">
                       Enable real-time push alerts to my Telegram account
@@ -782,7 +782,7 @@ export default function ProfileSettingsPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="w-full sm:w-auto bg-[#185DF1] hover:bg-[#031130] text-white font-bold py-3.5 px-8 rounded-xl transition-all duration-200 shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 text-sm disabled:opacity-50"
+                className="w-full sm:w-auto bg-[#111111] hover:bg-[#111111] text-white font-bold py-3.5 px-8 rounded-xl transition-all duration-200 shadow-md shadow-neutral-500/20 flex items-center justify-center gap-2 text-sm disabled:opacity-50"
               >
                 <Save size={18} />
                 <span>{saving ? "Saving Profile..." : "Save Profile Changes"}</span>

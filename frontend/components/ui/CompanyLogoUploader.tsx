@@ -17,6 +17,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { api } from "@/lib/api";
+import { resolveImageUrl } from "@/lib/utils";
 
 interface CompanyLogoUploaderProps {
   value: string;
@@ -38,7 +39,12 @@ export default function CompanyLogoUploader({
   const [dragOver, setDragOver] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const [fileName, setFileName] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [failedPreviewSrc, setFailedPreviewSrc] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const displayUrl = previewUrl || value;
+  const displaySrc = resolveImageUrl(displayUrl);
+  const previewFailed = failedPreviewSrc === displaySrc;
 
   const handleFileProcess = async (file: File) => {
     if (!file) return;
@@ -57,16 +63,16 @@ export default function CompanyLogoUploader({
     setUploadError("");
     setFileName(file.name);
 
-    // 1. Instant local preview via FileReader
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (e.target?.result && typeof e.target.result === "string") {
-        onChange(e.target.result);
-      }
-    };
-    reader.readAsDataURL(file);
+    const localPreview = await new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        resolve(typeof e.target?.result === "string" ? e.target.result : "");
+      };
+      reader.onerror = () => resolve("");
+      reader.readAsDataURL(file);
+    });
+    if (localPreview) setPreviewUrl(localPreview);
 
-    // 2. Upload to backend /uploads
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -78,10 +84,15 @@ export default function CompanyLogoUploader({
       });
 
       if (response.data && response.data.url) {
+        setPreviewUrl("");
         onChange(response.data.url);
+      } else if (localPreview) {
+        onChange(localPreview);
       }
-    } catch (err: any) {
-      console.warn("Backend upload failed, kept local data URL as fallback:", err);
+    } catch (error) {
+      console.warn("Backend upload failed, kept local data URL as fallback:", error);
+      if (localPreview) onChange(localPreview);
+      else setUploadError("Upload failed. Try again or paste an image URL.");
     } finally {
       setUploading(false);
     }
@@ -113,6 +124,7 @@ export default function CompanyLogoUploader({
 
   const handleClearLogo = () => {
     onChange("");
+    setPreviewUrl("");
     setFileName("");
     setUploadError("");
     if (fileInputRef.current) {
@@ -125,7 +137,7 @@ export default function CompanyLogoUploader({
       {/* Tab Switcher */}
       <div className="flex items-center justify-between border-b border-slate-200 pb-2">
         <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-          <ImageIcon size={14} className="text-[#185DF1]" />
+          <ImageIcon size={14} className="text-[#111111]" />
           {label}
         </label>
 
@@ -135,7 +147,7 @@ export default function CompanyLogoUploader({
             onClick={() => setActiveTab("upload")}
             className={`px-2.5 py-1 rounded-md transition-all ${
               activeTab === "upload"
-                ? "bg-white text-[#185DF1] shadow-sm font-bold"
+                ? "bg-white text-[#111111] shadow-sm font-bold"
                 : "text-slate-500 hover:text-slate-800"
             }`}
           >
@@ -146,7 +158,7 @@ export default function CompanyLogoUploader({
             onClick={() => setActiveTab("url")}
             className={`px-2.5 py-1 rounded-md transition-all ${
               activeTab === "url"
-                ? "bg-white text-[#185DF1] shadow-sm font-bold"
+                ? "bg-white text-[#111111] shadow-sm font-bold"
                 : "text-slate-500 hover:text-slate-800"
             }`}
           >
@@ -165,19 +177,21 @@ export default function CompanyLogoUploader({
       {/* Tab 1: Upload from local device */}
       {activeTab === "upload" && (
         <div>
-          {value ? (
+          {displayUrl ? (
             /* Current Logo Preview Card */
-            <div className="flex items-center gap-4 p-4 bg-[#F8FAFC] border border-blue-200 rounded-2xl relative group">
-              <div className="w-16 h-16 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center p-1.5 shrink-0 overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={value}
-                  alt={companyName}
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
+            <div className="flex items-center gap-4 p-4 bg-[#F8FAFC] border border-neutral-200 rounded-2xl relative group">
+              <div className="relative w-16 h-16 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center p-1.5 shrink-0 overflow-hidden">
+                {previewFailed ? (
+                  <ImageIcon className="text-slate-300" size={24} aria-hidden="true" />
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={displaySrc}
+                    alt={companyName}
+                    className="w-full h-full object-contain"
+                    onError={() => setFailedPreviewSrc(displaySrc)}
+                  />
+                )}
               </div>
 
               <div className="flex-1 min-w-0">
@@ -185,18 +199,18 @@ export default function CompanyLogoUploader({
                   <span className="text-xs font-bold text-slate-800 truncate">
                     {fileName || `${label} Selected`}
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-700 bg-neutral-50 px-2 py-0.5 rounded-md border border-neutral-200">
                     Active
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-500 truncate mt-0.5">
-                  {value.startsWith("data:") ? "Local Image Asset (Ready to Save)" : value}
+                  {displayUrl.startsWith("data:") ? "Local Image Asset (Ready to Save)" : displayUrl}
                 </p>
                 <div className="flex items-center gap-3 mt-2">
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="text-xs font-bold text-[#185DF1] hover:underline flex items-center gap-1"
+                    className="text-xs font-bold text-[#111111] hover:underline flex items-center gap-1"
                   >
                     <RefreshCw size={12} /> Replace Image
                   </button>
@@ -219,13 +233,13 @@ export default function CompanyLogoUploader({
               onClick={() => fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all duration-200 ${
                 dragOver
-                  ? "border-[#185DF1] bg-blue-50/50 scale-[0.99]"
-                  : "border-slate-300 hover:border-[#185DF1] bg-[#F8FAFC] hover:bg-white"
+                  ? "border-[#111111] bg-neutral-50/50 scale-[0.99]"
+                  : "border-slate-300 hover:border-[#111111] bg-[#F8FAFC] hover:bg-white"
               }`}
             >
-              <div className="w-12 h-12 bg-blue-50 rounded-2xl text-[#185DF1] flex items-center justify-center mx-auto mb-3 shadow-inner">
+              <div className="w-12 h-12 bg-neutral-50 rounded-2xl text-[#111111] flex items-center justify-center mx-auto mb-3 shadow-inner">
                 {uploading ? (
-                  <div className="w-5 h-5 border-2 border-[#185DF1] border-t-transparent rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-[#111111] border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <UploadCloud size={24} />
                 )}
@@ -263,7 +277,7 @@ export default function CompanyLogoUploader({
                 setFileName("");
               }}
               placeholder="https://example.com/company-logo.png"
-              className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-9 pr-8 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+              className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-9 pr-8 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
             />
             {value && (
               <button
@@ -279,8 +293,17 @@ export default function CompanyLogoUploader({
           {value && (
             <div className="flex items-center gap-3 p-3 bg-[#F8FAFC] rounded-xl border border-slate-200">
               <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={value} alt="Preview" className="w-full h-full object-contain" />
+                {previewFailed ? (
+                  <ImageIcon className="text-slate-300" size={18} aria-hidden="true" />
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={resolveImageUrl(value)}
+                    alt="Preview"
+                    className="w-full h-full object-contain"
+                    onError={() => setFailedPreviewSrc(resolveImageUrl(value))}
+                  />
+                )}
               </div>
               <div className="text-xs text-slate-600 truncate">
                 <span className="font-bold text-slate-800 block">Logo URL Link Active</span>

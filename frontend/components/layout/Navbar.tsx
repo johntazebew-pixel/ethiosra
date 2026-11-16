@@ -21,16 +21,22 @@ import {
   ChevronDown,
   Settings,
   PlusCircle,
-  Sparkles,
   Users,
   Building2,
 } from "lucide-react";
+import { SiteWordmark } from "@/components/layout/BrandingProvider";
+
+type NavUser = {
+  email: string;
+  fullName?: string;
+  role?: string;
+};
 
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<NavUser | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -78,12 +84,6 @@ export default function Navbar() {
     };
   }, []);
 
-  // Close dropdown on route change
-  useEffect(() => {
-    setDropdownOpen(false);
-    setIsOpen(false);
-  }, [pathname]);
-
   const handleLogout = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
@@ -115,20 +115,20 @@ export default function Navbar() {
       case "SUPERADMIN":
         return {
           label: "SuperAdmin",
-          bg: "bg-purple-100 text-purple-700 border-purple-200",
-          gradient: "from-purple-600 to-indigo-600",
+          bg: "bg-neutral-100 text-neutral-700 border-neutral-200",
+          gradient: "from-neutral-600 to-neutral-600",
         };
       case "ADMIN":
         return {
           label: "Admin",
-          bg: "bg-blue-100 text-blue-700 border-blue-200",
-          gradient: "from-blue-600 to-indigo-600",
+          bg: "bg-neutral-100 text-neutral-700 border-neutral-200",
+          gradient: "from-neutral-700 to-neutral-950",
         };
       default:
         return {
           label: "Job Seeker",
-          bg: "bg-emerald-100 text-emerald-700 border-emerald-200",
-          gradient: "from-emerald-500 to-teal-600",
+          bg: "bg-neutral-100 text-neutral-700 border-neutral-200",
+          gradient: "from-neutral-600 to-neutral-800",
         };
     }
   };
@@ -136,50 +136,47 @@ export default function Navbar() {
   const roleMeta = getRoleBadge(user?.role);
 
   return (
-    <nav className="bg-white/80 backdrop-blur-xl border-b border-slate-200/80 sticky top-0 z-50 shadow-sm transition-all duration-200">
+    <nav className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-md transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20 items-center">
+        <div className="flex justify-between h-16 items-center">
           
           {/* Logo & Brand */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="bg-gradient-to-br from-[#185DF1] to-[#0d44b8] p-2.5 rounded-2xl text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
-                <Briefcase size={22} />
-              </div>
-              <span className="text-2xl font-black tracking-tight text-[#031130]">
-                Ethio<span className="text-[#185DF1]">Sira</span>
+              <span className="group-hover:scale-105 transition-transform duration-200">
+                <SiteWordmark />
               </span>
             </Link>
           </div>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-7 font-semibold text-slate-600">
+          <div className="hidden md:flex items-center gap-1 font-medium text-slate-600">
             <Link
               href="/"
-              className={`transition-colors duration-150 py-1 ${
+              className={`rounded-full px-3.5 py-2 text-sm transition-colors ${
                 pathname === "/"
-                  ? "text-[#185DF1] font-bold border-b-2 border-[#185DF1]"
-                  : "hover:text-[#185DF1]"
+                  ? "bg-neutral-50 text-neutral-800 font-semibold"
+                  : "hover:bg-neutral-100 hover:text-neutral-950"
               }`}
             >
               Find Jobs
             </Link>
             <Link
               href="/companies"
-              className={`transition-colors duration-150 py-1 ${
+              className={`rounded-full px-3.5 py-2 text-sm transition-colors ${
                 pathname.startsWith("/companies")
-                  ? "text-[#185DF1] font-bold border-b-2 border-[#185DF1]"
-                  : "hover:text-[#185DF1]"
+                  ? "bg-neutral-50 text-neutral-800 font-semibold"
+                  : "hover:bg-neutral-100 hover:text-neutral-950"
               }`}
             >
               Companies
             </Link>
             <Link
               href="/support"
-              className={`transition-colors duration-150 py-1 ${
+              className={`rounded-full px-3.5 py-2 text-sm transition-colors ${
                 pathname === "/support"
-                  ? "text-[#185DF1] font-bold border-b-2 border-[#185DF1]"
-                  : "hover:text-[#185DF1]"
+                  ? "bg-neutral-50 text-neutral-800 font-semibold"
+                  : "hover:bg-neutral-100 hover:text-neutral-950"
               }`}
             >
               Support & Help
@@ -189,7 +186,7 @@ export default function Navbar() {
             {user?.role === "SUPERADMIN" && (
               <Link
                 href="/superadmin/dashboard"
-                className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-lg transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-neutral-700 bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-3 py-1.5 rounded-lg transition-colors"
               >
                 <ShieldAlert size={14} /> SuperAdmin Center
               </Link>
@@ -197,7 +194,7 @@ export default function Navbar() {
             {user?.role === "ADMIN" && (
               <Link
                 href="/admin/dashboard"
-                className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-lg transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-neutral-700 bg-neutral-50 hover:bg-neutral-100 border border-neutral-200 px-3 py-1.5 rounded-lg transition-colors"
               >
                 <Shield size={14} /> Admin Portal
               </Link>
@@ -214,18 +211,18 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-3 p-1.5 pr-3 rounded-full hover:bg-slate-100/80 border border-transparent hover:border-slate-200 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                  className="flex items-center gap-3 p-1.5 pr-3 rounded-full hover:bg-slate-100/80 border border-transparent hover:border-slate-200 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-neutral-500/20"
                   aria-expanded={dropdownOpen}
                 >
                   {/* Circle Avatar */}
                   <div className="relative">
                     <div
-                      className={`w-10 h-10 rounded-full bg-gradient-to-br ${roleMeta.gradient} flex items-center justify-center text-white font-bold text-sm shadow-md shadow-blue-500/10 border-2 border-white`}
+                      className={`w-10 h-10 rounded-full bg-gradient-to-br ${roleMeta.gradient} flex items-center justify-center text-white font-bold text-sm shadow-md shadow-neutral-500/10 border-2 border-white`}
                     >
                       {getInitials(user.fullName, user.email)}
                     </div>
                     {/* Active Online Indicator */}
-                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></span>
+                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-neutral-500 border-2 border-white rounded-full"></span>
                   </div>
 
                   {/* Name and Role Label */}
@@ -242,7 +239,7 @@ export default function Navbar() {
                   <ChevronDown
                     size={16}
                     className={`text-slate-400 group-hover:text-slate-700 transition-transform duration-200 ${
-                      dropdownOpen ? "rotate-180 text-blue-600" : ""
+                      dropdownOpen ? "rotate-180 text-neutral-600" : ""
                     }`}
                   />
                 </button>
@@ -281,7 +278,7 @@ export default function Navbar() {
                           <Link
                             href="/superadmin/dashboard"
                             onClick={() => setDropdownOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-purple-700 font-bold transition-colors"
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-50 text-neutral-700 font-bold transition-colors"
                           >
                             <ShieldAlert size={16} />
                             <span>Command Center</span>
@@ -289,17 +286,17 @@ export default function Navbar() {
                           <Link
                             href="/superadmin/users"
                             onClick={() => setDropdownOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-slate-700 font-medium transition-colors"
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-50 text-slate-700 font-medium transition-colors"
                           >
-                            <Users size={16} className="text-purple-600" />
+                            <Users size={16} className="text-neutral-600" />
                             <span>Manage Users & Roles</span>
                           </Link>
                           <Link
                             href="/superadmin/jobs"
                             onClick={() => setDropdownOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2 hover:bg-purple-50 text-slate-700 font-medium transition-colors"
+                            className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-50 text-slate-700 font-medium transition-colors"
                           >
-                            <Briefcase size={16} className="text-purple-600" />
+                            <Briefcase size={16} className="text-neutral-600" />
                             <span>Master Job Vacancies</span>
                           </Link>
                         </>
@@ -310,7 +307,7 @@ export default function Navbar() {
                           <Link
                             href="/admin/dashboard"
                             onClick={() => setDropdownOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-blue-50 text-blue-700 font-semibold transition-colors"
+                            className="flex items-center gap-3 px-4 py-2.5 hover:bg-neutral-50 text-neutral-700 font-semibold transition-colors"
                           >
                             <Shield size={16} />
                             <span>Admin Portal</span>
@@ -320,7 +317,7 @@ export default function Navbar() {
                             onClick={() => setDropdownOpen(false)}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 font-medium transition-colors"
                           >
-                            <PlusCircle size={16} className="text-blue-500" />
+                            <PlusCircle size={16} className="text-neutral-500" />
                             <span>Post a New Job</span>
                           </Link>
                           <Link
@@ -328,7 +325,7 @@ export default function Navbar() {
                             onClick={() => setDropdownOpen(false)}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 font-medium transition-colors"
                           >
-                            <Briefcase size={16} className="text-blue-500" />
+                            <Briefcase size={16} className="text-neutral-500" />
                             <span>Manage Job Listings</span>
                           </Link>
                           <Link
@@ -336,7 +333,7 @@ export default function Navbar() {
                             onClick={() => setDropdownOpen(false)}
                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 font-medium transition-colors"
                           >
-                            <Building2 size={16} className="text-blue-500" />
+                            <Building2 size={16} className="text-neutral-500" />
                             <span>Manage Companies</span>
                           </Link>
                         </>
@@ -371,14 +368,14 @@ export default function Navbar() {
               <div className="flex items-center gap-3">
                 <Link
                   href="/login"
-                  className="flex items-center gap-2 text-slate-700 font-bold hover:text-[#185DF1] px-4 py-2.5 rounded-xl transition-colors text-sm"
+                  className="flex items-center gap-2 text-slate-700 font-bold hover:text-[#111111] px-4 py-2.5 rounded-xl transition-colors text-sm"
                 >
                   <User size={18} />
                   <span>Sign In</span>
                 </Link>
                 <Link
                   href="/register"
-                  className="bg-gradient-to-r from-[#185DF1] to-[#0f4ed4] hover:from-[#031130] hover:to-[#031130] text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-blue-500/20"
+                  className="bg-gradient-to-r from-[#111111] to-[#2D2D2D] hover:from-[#111111] hover:to-[#111111] text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-neutral-500/20"
                 >
                   Get Started
                 </Link>
@@ -391,7 +388,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-slate-700 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors"
+              className="text-neutral-900 p-2.5 rounded-full bg-neutral-100 hover:bg-neutral-200 transition-colors"
               aria-label="Toggle Navigation Menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -453,7 +450,7 @@ export default function Navbar() {
               <Link
                 href="/superadmin/dashboard"
                 onClick={() => setIsOpen(false)}
-                className="block py-2.5 px-3 rounded-xl text-purple-700 bg-purple-50 font-bold"
+                className="block py-2.5 px-3 rounded-xl text-neutral-700 bg-neutral-50 font-bold"
               >
                 SuperAdmin Dashboard
               </Link>
@@ -464,7 +461,7 @@ export default function Navbar() {
                 <Link
                   href="/admin/dashboard"
                   onClick={() => setIsOpen(false)}
-                  className="block py-2.5 px-3 rounded-xl text-blue-700 bg-blue-50 font-bold"
+                  className="block py-2.5 px-3 rounded-xl text-neutral-700 bg-neutral-50 font-bold"
                 >
                   Admin Portal
                 </Link>
@@ -519,7 +516,7 @@ export default function Navbar() {
                 <Link
                   href="/register"
                   onClick={() => setIsOpen(false)}
-                  className="text-center font-bold text-white py-3 bg-[#185DF1] hover:bg-[#031130] rounded-xl transition-colors text-sm shadow-md shadow-blue-500/20"
+                  className="text-center font-bold text-white py-3 bg-[#111111] hover:bg-[#111111] rounded-xl transition-colors text-sm shadow-md shadow-neutral-500/20"
                 >
                   Register
                 </Link>

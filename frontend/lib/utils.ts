@@ -73,13 +73,14 @@ export function getInitials(name?: string | null): string {
  * absolute URLs, data URLs, and returns an empty string if null.
  */
 export function resolveImageUrl(url?: string | null): string {
-  if (!url) return "";
-  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) {
-    return url;
+  const imageUrl = url?.trim();
+  if (!imageUrl) return "";
+  if (/^(https?:|data:|blob:)/i.test(imageUrl)) {
+    return imageUrl;
   }
-  const backendBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
-  if (url.startsWith("/")) {
-    return `${backendBase}${url}`;
+  if (imageUrl.startsWith("//")) {
+    return `https:${imageUrl}`;
   }
-  return `${backendBase}/${url}`;
+  const backendBase = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333").replace(/\/+$/, "");
+  return `${backendBase}/${imageUrl.replace(/^\/+/, "")}`;
 }

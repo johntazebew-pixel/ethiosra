@@ -59,6 +59,17 @@ $ npm run test:cov
 
 ## Deployment
 
+### Persistent logo uploads
+
+Uploaded logos are served from the backend's `uploads` directory. The default is
+`<working directory>/uploads`; on hosts with ephemeral filesystems, mount a
+persistent disk and set `UPLOADS_DIR` to its path (for example, `/var/data/uploads`
+on Render). The API stores relative `/uploads/...` URLs in the database, and the
+frontend resolves them against the configured backend URL.
+
+If previously uploaded files have already disappeared from an ephemeral disk,
+those logo files must be uploaded again after persistent storage is configured.
+
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
 
 If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:

@@ -151,25 +151,25 @@ export default function SuperAdminUsersPage() {
   const getRoleBadgeStyle = (role: string) => {
     switch (role) {
       case "SUPERADMIN":
-        return "bg-purple-100 text-purple-800 border-purple-200";
+        return "bg-neutral-100 text-neutral-800 border-neutral-200";
       case "ADMIN":
-        return "bg-blue-100 text-blue-800 border-blue-200";
+        return "bg-neutral-100 text-neutral-800 border-neutral-200";
       default:
-        return "bg-emerald-100 text-emerald-800 border-emerald-200";
+        return "bg-neutral-100 text-neutral-800 border-neutral-200";
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       <SuperAdminNav />
 
       {/* --- HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-10 pb-20 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-10 pb-20 px-4 text-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <Link
               href="/superadmin/dashboard"
-              className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium mb-4 text-xs transition-colors"
+              className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium mb-4 text-xs transition-colors"
             >
               <ArrowLeft size={14} /> Back to command center
             </Link>
@@ -181,7 +181,7 @@ export default function SuperAdminUsersPage() {
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                   User & Talent Access Management
                 </h1>
-                <p className="text-blue-100/80 text-xs md:text-sm mt-0.5">
+                <p className="text-neutral-100/80 text-xs md:text-sm mt-0.5">
                   Manage registered accounts, adjust authorization roles, and inspect candidate career dossiers.
                 </p>
               </div>
@@ -196,26 +196,26 @@ export default function SuperAdminUsersPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Accounts</p>
-            <p className="text-2xl font-black text-[#031130] mt-1">{stats.total}</p>
+            <p className="text-2xl font-black text-[#111111] mt-1">{stats.total}</p>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <p className="text-xs font-bold text-purple-600 uppercase tracking-wider">SuperAdmins</p>
-            <p className="text-2xl font-black text-purple-700 mt-1">{stats.superAdmins}</p>
+            <p className="text-xs font-bold text-neutral-600 uppercase tracking-wider">SuperAdmins</p>
+            <p className="text-2xl font-black text-neutral-700 mt-1">{stats.superAdmins}</p>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <p className="text-xs font-bold text-blue-600 uppercase tracking-wider">Admins / Recruiters</p>
-            <p className="text-2xl font-black text-blue-700 mt-1">{stats.admins}</p>
+            <p className="text-xs font-bold text-neutral-600 uppercase tracking-wider">Admins / Recruiters</p>
+            <p className="text-2xl font-black text-neutral-700 mt-1">{stats.admins}</p>
           </div>
           <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Job Seekers</p>
-            <p className="text-2xl font-black text-emerald-700 mt-1">{stats.seekers}</p>
+            <p className="text-xs font-bold text-neutral-600 uppercase tracking-wider">Job Seekers</p>
+            <p className="text-2xl font-black text-neutral-700 mt-1">{stats.seekers}</p>
           </div>
         </div>
 
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 md:p-8">
           {actionMessage && (
-            <div className="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
-              <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+            <div className="mb-6 bg-neutral-50 border border-neutral-200 text-neutral-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
+              <CheckCircle2 size={18} className="text-neutral-500 shrink-0" />
               <span>{actionMessage}</span>
             </div>
           )}
@@ -242,8 +242,8 @@ export default function SuperAdminUsersPage() {
                   onClick={() => setRoleFilter(pill.id)}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     roleFilter === pill.id
-                      ? "bg-[#185DF1] text-white shadow-sm"
-                      : "bg-[#F3F7FE] text-slate-600 hover:bg-slate-200"
+                      ? "bg-[#111111] text-white shadow-sm"
+                      : "bg-[#F7F7F7] text-slate-600 hover:bg-slate-200"
                   }`}
                 >
                   {pill.label}
@@ -259,14 +259,14 @@ export default function SuperAdminUsersPage() {
                 placeholder="Search by name, email, title, or city..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#185DF1] font-medium"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#111111] font-medium"
               />
             </div>
           </div>
 
           {loading ? (
             <div className="py-16 text-center text-slate-400 font-medium">
-              <div className="w-10 h-10 border-4 border-[#185DF1] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+              <div className="w-10 h-10 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
               Loading user accounts and career profiles...
             </div>
           ) : filteredUsers.length > 0 ? (
@@ -274,17 +274,17 @@ export default function SuperAdminUsersPage() {
               {filteredUsers.map((user) => (
                 <div
                   key={user.id}
-                  className="p-5 md:p-6 bg-[#F8FAFC] hover:bg-white rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all duration-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+                  className="p-5 md:p-6 bg-[#F8FAFC] hover:bg-white rounded-2xl border border-slate-200/80 hover:border-neutral-300 hover:shadow-md transition-all duration-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
                 >
                   <div className="space-y-2 flex-1">
                     {/* Top Row: Avatar, Name, Email, Role badge, Availability */}
                     <div className="flex flex-wrap items-center gap-3">
-                      <div className="w-11 h-11 rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+                      <div className="w-11 h-11 rounded-full bg-gradient-to-br from-neutral-600 to-neutral-700 text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
                         {(user.fullName || user.email).substring(0, 2).toUpperCase()}
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h3 className="font-bold text-[#031130] text-base">
+                          <h3 className="font-bold text-[#111111] text-base">
                             {user.fullName || user.email.split("@")[0]}
                           </h3>
                           <span
@@ -295,7 +295,7 @@ export default function SuperAdminUsersPage() {
                             {user.role}
                           </span>
                           {user.isAvailableForHire && (
-                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] font-bold text-neutral-700 bg-neutral-50 border border-neutral-200 px-2 py-0.5 rounded-full">
                               ● Ready for Hire
                             </span>
                           )}
@@ -316,7 +316,7 @@ export default function SuperAdminUsersPage() {
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600 pt-1">
                       {user.currentTitle && (
                         <span className="flex items-center gap-1 font-semibold text-slate-700">
-                          <Briefcase size={13} className="text-[#185DF1]" />
+                          <Briefcase size={13} className="text-[#111111]" />
                           {user.currentTitle}
                         </span>
                       )}
@@ -345,7 +345,7 @@ export default function SuperAdminUsersPage() {
                         {user.skills.slice(0, 5).map((skill: string, sIdx: number) => (
                           <span
                             key={sIdx}
-                            className="text-[10px] font-semibold bg-blue-50 text-[#185DF1] px-2 py-0.5 rounded-md border border-blue-100"
+                            className="text-[10px] font-semibold bg-neutral-50 text-[#111111] px-2 py-0.5 rounded-md border border-neutral-100"
                           >
                             {skill}
                           </span>
@@ -380,7 +380,7 @@ export default function SuperAdminUsersPage() {
                     <button
                       type="button"
                       onClick={() => setSelectedUser(user)}
-                      className="p-2 bg-blue-50 hover:bg-blue-100 text-[#185DF1] rounded-xl transition-colors font-bold text-xs flex items-center gap-1"
+                      className="p-2 bg-neutral-50 hover:bg-neutral-100 text-[#111111] rounded-xl transition-colors font-bold text-xs flex items-center gap-1"
                       title="Inspect Candidate Dossier"
                     >
                       <Eye size={15} />
@@ -413,7 +413,7 @@ export default function SuperAdminUsersPage() {
               ))}
             </div>
           ) : (
-            <div className="py-16 text-center text-slate-400 font-medium bg-[#F3F7FE] rounded-2xl border border-slate-200">
+            <div className="py-16 text-center text-slate-400 font-medium bg-[#F7F7F7] rounded-2xl border border-slate-200">
               <AlertCircle size={36} className="mx-auto mb-2 text-slate-300" />
               <p>No user accounts matched your search criteria.</p>
             </div>
@@ -435,12 +435,12 @@ export default function SuperAdminUsersPage() {
 
             {/* Dossier Header */}
             <div className="flex items-start gap-4 mb-6 pb-6 border-b border-slate-100">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-extrabold text-2xl flex items-center justify-center shrink-0 shadow-md">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-neutral-600 to-neutral-700 text-white font-extrabold text-2xl flex items-center justify-center shrink-0 shadow-md">
                 {(selectedUser.fullName || selectedUser.email).substring(0, 2).toUpperCase()}
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <h3 className="text-xl font-extrabold text-[#031130]">
+                  <h3 className="text-xl font-extrabold text-[#111111]">
                     {selectedUser.fullName || selectedUser.email.split("@")[0]}
                   </h3>
                   <span
@@ -463,21 +463,21 @@ export default function SuperAdminUsersPage() {
               {/* Contact Info */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200">
                 <div className="flex items-center gap-2">
-                  <Mail size={15} className="text-[#185DF1]" />
+                  <Mail size={15} className="text-[#111111]" />
                   <span className="font-semibold text-slate-700">{selectedUser.email}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone size={15} className="text-[#185DF1]" />
+                  <Phone size={15} className="text-[#111111]" />
                   <span className="font-semibold text-slate-700">
                     {selectedUser.phone || "No phone provided"}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPin size={15} className="text-[#185DF1]" />
+                  <MapPin size={15} className="text-[#111111]" />
                   <span className="font-semibold text-slate-700">{selectedUser.city || "Addis Ababa"}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Globe size={15} className="text-[#185DF1]" />
+                  <Globe size={15} className="text-[#111111]" />
                   <span className="font-semibold text-slate-700">
                     Lang: {selectedUser.preferredLanguage || "EN"} • Theme: {selectedUser.preferredTheme || "LIGHT"}
                   </span>
@@ -519,7 +519,7 @@ export default function SuperAdminUsersPage() {
                   <span className="font-bold text-slate-800 text-sm mt-0.5 block">
                     {selectedUser.yearsOfExperience || 0} Years
                   </span>
-                  <span className="text-emerald-700 font-semibold text-xs block mt-0.5">
+                  <span className="text-neutral-700 font-semibold text-xs block mt-0.5">
                     {selectedUser.isAvailableForHire ? "Available for hire" : "Not actively seeking"}
                   </span>
                 </div>
@@ -535,7 +535,7 @@ export default function SuperAdminUsersPage() {
                     {selectedUser.skills.map((skill: string, idx: number) => (
                       <span
                         key={idx}
-                        className="bg-blue-50 text-[#185DF1] px-2.5 py-1 rounded-lg font-bold border border-blue-100 flex items-center gap-1"
+                        className="bg-neutral-50 text-[#111111] px-2.5 py-1 rounded-lg font-bold border border-neutral-100 flex items-center gap-1"
                       >
                         <Award size={12} />
                         {skill}
@@ -552,7 +552,7 @@ export default function SuperAdminUsersPage() {
                     href={selectedUser.resumeUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#185DF1] text-white rounded-xl font-bold hover:bg-[#031130] transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#111111] text-white rounded-xl font-bold hover:bg-[#111111] transition-colors"
                   >
                     <FileText size={14} /> View CV / Resume <ExternalLink size={12} />
                   </a>

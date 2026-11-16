@@ -35,6 +35,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import SuperAdminNav from "@/components/layout/SuperAdminNav";
+import CompanyAvatar from "@/components/ui/CompanyAvatar";
 
 export default function SuperAdminJobsPage() {
   const router = useRouter();
@@ -257,11 +258,11 @@ export default function SuperAdminJobsPage() {
         </button>
 
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#185DF1] flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-neutral-50 text-[#111111] flex items-center justify-center font-bold">
             <Edit2 size={20} />
           </div>
           <div>
-            <h3 className="text-xl font-extrabold text-[#031130]">Edit Job Vacancy</h3>
+            <h3 className="text-xl font-extrabold text-[#111111]">Edit Job Vacancy</h3>
             <p className="text-xs text-slate-500">
               Update posting details, compensation, deadline, and live publication status.
             </p>
@@ -278,7 +279,7 @@ export default function SuperAdminJobsPage() {
               required
               value={editForm.title}
               onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-              className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+              className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
             />
           </div>
 
@@ -291,7 +292,7 @@ export default function SuperAdminJobsPage() {
                 type="text"
                 value={editForm.location}
                 onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
               />
             </div>
 
@@ -302,7 +303,7 @@ export default function SuperAdminJobsPage() {
               <select
                 value={editForm.workplaceType}
                 onChange={(e) => setEditForm({ ...editForm, workplaceType: e.target.value })}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] cursor-pointer"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] cursor-pointer"
               >
                 <option value="ON_SITE">On-site (Office)</option>
                 <option value="HYBRID">Hybrid</option>
@@ -319,7 +320,7 @@ export default function SuperAdminJobsPage() {
               <select
                 value={editForm.status}
                 onChange={(e) => setEditForm({ ...editForm, status: e.target.value })}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] cursor-pointer"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] cursor-pointer"
               >
                 <option value="PUBLISHED">Published Live</option>
                 <option value="DRAFT">Draft</option>
@@ -334,7 +335,7 @@ export default function SuperAdminJobsPage() {
               <select
                 value={editForm.applicationMethod}
                 onChange={(e) => setEditForm({ ...editForm, applicationMethod: e.target.value })}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] cursor-pointer"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] cursor-pointer"
               >
                 <option value="WEBSITE">Website Portal</option>
                 <option value="EMAIL">Email Submission</option>
@@ -351,7 +352,7 @@ export default function SuperAdminJobsPage() {
                 type="date"
                 value={editForm.deadlineDate}
                 onChange={(e) => setEditForm({ ...editForm, deadlineDate: e.target.value })}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
               />
             </div>
           </div>
@@ -365,7 +366,7 @@ export default function SuperAdminJobsPage() {
               value={editForm.applicationUrl}
               onChange={(e) => setEditForm({ ...editForm, applicationUrl: e.target.value })}
               placeholder="https://company.com/apply or jobs@company.et"
-              className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+              className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
             />
           </div>
 
@@ -373,7 +374,7 @@ export default function SuperAdminJobsPage() {
           <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-200 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
-                <DollarSign size={14} className="text-emerald-600" />
+                <DollarSign size={14} className="text-neutral-600" />
                 Compensation Details
               </span>
               <label className="inline-flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-600">
@@ -381,7 +382,7 @@ export default function SuperAdminJobsPage() {
                   type="checkbox"
                   checked={editForm.isSalaryNegotiable}
                   onChange={(e) => setEditForm({ ...editForm, isSalaryNegotiable: e.target.checked })}
-                  className="rounded text-[#185DF1] focus:ring-[#185DF1]"
+                  className="rounded text-[#111111] focus:ring-[#111111]"
                 />
                 Negotiable Salary
               </label>
@@ -442,7 +443,7 @@ export default function SuperAdminJobsPage() {
               rows={4}
               value={editForm.description}
               onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-              className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl p-3 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+              className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl p-3 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
             />
           </div>
 
@@ -457,7 +458,7 @@ export default function SuperAdminJobsPage() {
             <button
               type="submit"
               disabled={savingEdit}
-              className="px-6 py-2.5 text-xs font-bold bg-[#185DF1] hover:bg-[#031130] text-white rounded-xl transition-all shadow-md shadow-blue-500/20 disabled:opacity-50 flex items-center gap-1.5"
+              className="px-6 py-2.5 text-xs font-bold bg-[#111111] hover:bg-[#111111] text-white rounded-xl transition-all shadow-md shadow-neutral-500/20 disabled:opacity-50 flex items-center gap-1.5"
             >
               <Save size={14} />
               {savingEdit ? "Saving..." : "Save Job Changes"}
@@ -469,16 +470,16 @@ export default function SuperAdminJobsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       <SuperAdminNav />
 
       {/* --- HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-10 pb-20 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-10 pb-20 px-4 text-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <Link
               href="/superadmin/dashboard"
-              className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium mb-4 text-xs transition-colors"
+              className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium mb-4 text-xs transition-colors"
             >
               <ArrowLeft size={14} /> Back to command center
             </Link>
@@ -490,7 +491,7 @@ export default function SuperAdminJobsPage() {
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                   Master Jobs Governance
                 </h1>
-                <p className="text-blue-100/80 text-xs md:text-sm mt-0.5">
+                <p className="text-neutral-100/80 text-xs md:text-sm mt-0.5">
                   Universal catalog of all listings across Ethiopia with edit popup, force-purge & status authority
                 </p>
               </div>
@@ -499,7 +500,7 @@ export default function SuperAdminJobsPage() {
 
           <Link
             href="/admin/jobs/create"
-            className="bg-white text-[#185DF1] hover:bg-blue-50 font-bold py-3 px-5 rounded-xl transition-all shadow-md flex items-center gap-2 text-xs w-fit"
+            className="bg-white text-[#111111] hover:bg-neutral-50 font-bold py-3 px-5 rounded-xl transition-all shadow-md flex items-center gap-2 text-xs w-fit"
           >
             <PlusCircle size={16} /> Post New Vacancy
           </Link>
@@ -510,8 +511,8 @@ export default function SuperAdminJobsPage() {
       <div className="max-w-7xl mx-auto px-4 -mt-10">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 md:p-8">
           {actionMessage && (
-            <div className="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
-              <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+            <div className="mb-6 bg-neutral-50 border border-neutral-200 text-neutral-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
+              <CheckCircle2 size={18} className="text-neutral-500 shrink-0" />
               <span>{actionMessage}</span>
             </div>
           )}
@@ -531,8 +532,8 @@ export default function SuperAdminJobsPage() {
                 onClick={() => setStatusFilter("ALL")}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   statusFilter === "ALL"
-                    ? "bg-[#185DF1] text-white shadow-md shadow-blue-500/20"
-                    : "bg-[#F3F7FE] text-slate-600 hover:bg-slate-200/70"
+                    ? "bg-[#111111] text-white shadow-md shadow-neutral-500/20"
+                    : "bg-[#F7F7F7] text-slate-600 hover:bg-slate-200/70"
                 }`}
               >
                 All Jobs ({stats.total})
@@ -542,8 +543,8 @@ export default function SuperAdminJobsPage() {
                 onClick={() => setStatusFilter("PUBLISHED")}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   statusFilter === "PUBLISHED"
-                    ? "bg-emerald-600 text-white shadow-md shadow-emerald-500/20"
-                    : "bg-[#F3F7FE] text-slate-600 hover:bg-slate-200/70"
+                    ? "bg-neutral-600 text-white shadow-md shadow-neutral-500/20"
+                    : "bg-[#F7F7F7] text-slate-600 hover:bg-slate-200/70"
                 }`}
               >
                 Published Live ({stats.published})
@@ -554,7 +555,7 @@ export default function SuperAdminJobsPage() {
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   statusFilter === "DRAFT"
                     ? "bg-amber-500 text-white shadow-md shadow-amber-500/20"
-                    : "bg-[#F3F7FE] text-slate-600 hover:bg-slate-200/70"
+                    : "bg-[#F7F7F7] text-slate-600 hover:bg-slate-200/70"
                 }`}
               >
                 Drafts ({stats.drafts})
@@ -565,7 +566,7 @@ export default function SuperAdminJobsPage() {
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   statusFilter === "DELETED"
                     ? "bg-red-600 text-white shadow-md shadow-red-500/20"
-                    : "bg-[#F3F7FE] text-slate-600 hover:bg-slate-200/70"
+                    : "bg-[#F7F7F7] text-slate-600 hover:bg-slate-200/70"
                 }`}
               >
                 Pending / Deleted ({stats.pending})
@@ -579,14 +580,14 @@ export default function SuperAdminJobsPage() {
                 placeholder="Search by title, company, or city..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#185DF1] font-medium"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#111111] font-medium"
               />
             </div>
           </div>
 
           {loading ? (
             <div className="py-16 text-center text-slate-400 font-medium">
-              <div className="w-10 h-10 border-4 border-[#185DF1] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+              <div className="w-10 h-10 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
               Loading master vacancy catalog...
             </div>
           ) : filteredJobs.length > 0 ? (
@@ -597,27 +598,19 @@ export default function SuperAdminJobsPage() {
                 return (
                   <div
                     key={job.id}
-                    className="p-5 md:p-6 bg-[#F8FAFC] hover:bg-white rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all duration-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+                    className="p-5 md:p-6 bg-[#F8FAFC] hover:bg-white rounded-2xl border border-slate-200/80 hover:border-neutral-300 hover:shadow-md transition-all duration-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
                   >
                     <div className="space-y-2 flex-1">
                       <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#185DF1] font-extrabold shadow-sm shrink-0 uppercase border border-slate-200 overflow-hidden">
-                          {job.company?.logoUrl ? (
-                            /* eslint-disable-next-line @next/next/no-img-element */
-                            <img
-                              src={job.company.logoUrl}
-                              alt={job.company.name}
-                              className="w-full h-full object-contain p-1"
-                            />
-                          ) : job.company?.name ? (
-                            job.company.name.substring(0, 2)
-                          ) : (
-                            "ET"
-                          )}
-                        </div>
+                        <CompanyAvatar
+                          name={job.company?.name}
+                          logoUrl={job.company?.logoUrl}
+                          fallback="ET"
+                          className="w-12 h-12 rounded-xl border border-slate-200 shadow-sm shrink-0 font-extrabold text-[#111111]"
+                        />
                         <div>
                           <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="font-bold text-[#031130] text-base hover:text-[#185DF1] transition-colors">
+                            <h3 className="font-bold text-[#111111] text-base hover:text-[#111111] transition-colors">
                               <Link href={`/jobs/${job.id}`}>{job.title}</Link>
                             </h3>
                             <span
@@ -626,7 +619,7 @@ export default function SuperAdminJobsPage() {
                                   ? "bg-red-100 text-red-800 border-red-200"
                                   : job.status === "DRAFT"
                                   ? "bg-amber-100 text-amber-800 border-amber-200"
-                                  : "bg-emerald-100 text-emerald-800 border-emerald-200"
+                                  : "bg-neutral-100 text-neutral-800 border-neutral-200"
                               }`}
                             >
                               {isPendingDeletion ? "PENDING DELETION" : job.status || "PUBLISHED"}
@@ -661,7 +654,7 @@ export default function SuperAdminJobsPage() {
                           job.categories.map((jc: any, cIdx: number) => (
                             <span
                               key={cIdx}
-                              className="text-[10px] font-bold bg-blue-50 text-[#185DF1] px-2 py-0.5 rounded-md border border-blue-100 flex items-center gap-1"
+                              className="text-[10px] font-bold bg-neutral-50 text-[#111111] px-2 py-0.5 rounded-md border border-neutral-100 flex items-center gap-1"
                             >
                               <Layers size={10} />
                               {jc.category?.name || "Category"}
@@ -673,7 +666,7 @@ export default function SuperAdminJobsPage() {
                           </span>
                         )}
                         {job.salaryMin && (
-                          <span className="text-[10px] font-semibold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-md border border-emerald-100">
+                          <span className="text-[10px] font-semibold bg-neutral-50 text-neutral-700 px-2 py-0.5 rounded-md border border-neutral-100">
                             {job.salaryMin.toLocaleString()} - {job.salaryMax?.toLocaleString()} {job.salaryCurrency}
                           </span>
                         )}
@@ -686,7 +679,7 @@ export default function SuperAdminJobsPage() {
                       <select
                         value={job.status || "PUBLISHED"}
                         onChange={(e) => handleUpdateStatus(job.id, e.target.value)}
-                        className="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#185DF1] cursor-pointer"
+                        className="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#111111] cursor-pointer"
                         title="Override Job Status"
                       >
                         <option value="PUBLISHED">Published Live</option>
@@ -698,7 +691,7 @@ export default function SuperAdminJobsPage() {
                       <button
                         type="button"
                         onClick={() => openEditModal(job)}
-                        className="p-2 bg-white hover:bg-blue-50 text-slate-600 hover:text-[#185DF1] rounded-xl border border-slate-200 transition-colors font-bold text-xs flex items-center gap-1 shadow-sm"
+                        className="p-2 bg-white hover:bg-neutral-50 text-slate-600 hover:text-[#111111] rounded-xl border border-slate-200 transition-colors font-bold text-xs flex items-center gap-1 shadow-sm"
                         title="Edit Job Vacancy"
                       >
                         <Edit2 size={14} />
@@ -708,7 +701,7 @@ export default function SuperAdminJobsPage() {
                       <Link
                         href={`/jobs/${job.id}`}
                         target="_blank"
-                        className="p-2 bg-blue-50 hover:bg-blue-100 text-[#185DF1] rounded-xl transition-colors font-bold text-xs flex items-center gap-1 shadow-sm"
+                        className="p-2 bg-neutral-50 hover:bg-neutral-100 text-[#111111] rounded-xl transition-colors font-bold text-xs flex items-center gap-1 shadow-sm"
                         title="View Public Listing"
                       >
                         <Eye size={15} />
@@ -730,7 +723,7 @@ export default function SuperAdminJobsPage() {
               })}
             </div>
           ) : (
-            <div className="py-16 text-center text-slate-400 font-medium bg-[#F3F7FE] rounded-2xl border border-slate-200">
+            <div className="py-16 text-center text-slate-400 font-medium bg-[#F7F7F7] rounded-2xl border border-slate-200">
               <AlertCircle size={36} className="mx-auto mb-2 text-slate-300" />
               <p>No job listings matched your filter criteria.</p>
             </div>

@@ -111,16 +111,16 @@ export default function SuperAdminDatabasePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       <SuperAdminNav />
 
       {/* --- HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-10 pb-20 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-10 pb-20 px-4 text-white">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <Link
               href="/superadmin/dashboard"
-              className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium mb-4 text-xs transition-colors"
+              className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium mb-4 text-xs transition-colors"
             >
               <ArrowLeft size={14} /> Back to command center
             </Link>
@@ -132,7 +132,7 @@ export default function SuperAdminDatabasePage() {
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                   Database & Storage Maintenance
                 </h1>
-                <p className="text-blue-100/80 text-xs md:text-sm mt-0.5">
+                <p className="text-neutral-100/80 text-xs md:text-sm mt-0.5">
                   Monitor PostgreSQL connection latency, live row counts, and generate data backup archives.
                 </p>
               </div>
@@ -154,8 +154,8 @@ export default function SuperAdminDatabasePage() {
       <div className="max-w-5xl mx-auto px-4 -mt-10">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 md:p-10">
           {statusMessage && (
-            <div className="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
-              <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
+            <div className="mb-6 bg-neutral-50 border border-neutral-200 text-neutral-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
+              <CheckCircle2 size={20} className="text-neutral-500 shrink-0" />
               <span>{statusMessage}</span>
             </div>
           )}
@@ -173,11 +173,11 @@ export default function SuperAdminDatabasePage() {
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                   PostgreSQL Status
                 </span>
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-neutral-500 animate-pulse"></span>
               </div>
-              <h3 className="text-2xl font-black text-[#031130]">{dbStatus.status}</h3>
+              <h3 className="text-2xl font-black text-[#111111]">{dbStatus.status}</h3>
               <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
-                <Activity size={13} className="text-emerald-500" /> Ping Latency: {dbStatus.latency}
+                <Activity size={13} className="text-neutral-500" /> Ping Latency: {dbStatus.latency}
               </p>
             </div>
 
@@ -186,9 +186,9 @@ export default function SuperAdminDatabasePage() {
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                   Neon Cloud Provider
                 </span>
-                <Server size={18} className="text-[#185DF1]" />
+                <Server size={18} className="text-[#111111]" />
               </div>
-              <h3 className="text-2xl font-black text-[#031130]">AWS eu-central-1</h3>
+              <h3 className="text-2xl font-black text-[#111111]">AWS eu-central-1</h3>
               <p className="text-xs text-slate-500 mt-1">Connection Pooling Active</p>
             </div>
 
@@ -197,57 +197,57 @@ export default function SuperAdminDatabasePage() {
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                   Storage Health
                 </span>
-                <HardDrive size={18} className="text-[#185DF1]" />
+                <HardDrive size={18} className="text-[#111111]" />
               </div>
-              <h3 className="text-2xl font-black text-[#031130]">Optimal</h3>
+              <h3 className="text-2xl font-black text-[#111111]">Optimal</h3>
               <p className="text-xs text-slate-500 mt-1">Automatic backups enabled</p>
             </div>
           </div>
 
           {/* LIVE TABLES ROW COUNTS */}
           <div className="mb-8">
-            <h3 className="text-base font-bold text-[#031130] mb-4">
+            <h3 className="text-base font-bold text-[#111111] mb-4">
               Live Managed Tables & Record Counts
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-              <div className="p-4 bg-[#F3F7FE] rounded-xl border border-slate-200 text-center">
-                <Users size={18} className="mx-auto text-[#185DF1] mb-1.5" />
+              <div className="p-4 bg-[#F7F7F7] rounded-xl border border-slate-200 text-center">
+                <Users size={18} className="mx-auto text-[#111111] mb-1.5" />
                 <span className="text-[11px] font-bold text-slate-500 block uppercase tracking-wider">
                   Users
                 </span>
-                <span className="text-xl font-extrabold text-[#031130]">{dbStatus.usersCount}</span>
+                <span className="text-xl font-extrabold text-[#111111]">{dbStatus.usersCount}</span>
               </div>
 
-              <div className="p-4 bg-[#F3F7FE] rounded-xl border border-slate-200 text-center">
-                <Briefcase size={18} className="mx-auto text-[#185DF1] mb-1.5" />
+              <div className="p-4 bg-[#F7F7F7] rounded-xl border border-slate-200 text-center">
+                <Briefcase size={18} className="mx-auto text-[#111111] mb-1.5" />
                 <span className="text-[11px] font-bold text-slate-500 block uppercase tracking-wider">
                   Jobs
                 </span>
-                <span className="text-xl font-extrabold text-[#031130]">{dbStatus.jobsCount}</span>
+                <span className="text-xl font-extrabold text-[#111111]">{dbStatus.jobsCount}</span>
               </div>
 
-              <div className="p-4 bg-[#F3F7FE] rounded-xl border border-slate-200 text-center">
-                <Building2 size={18} className="mx-auto text-[#185DF1] mb-1.5" />
+              <div className="p-4 bg-[#F7F7F7] rounded-xl border border-slate-200 text-center">
+                <Building2 size={18} className="mx-auto text-[#111111] mb-1.5" />
                 <span className="text-[11px] font-bold text-slate-500 block uppercase tracking-wider">
                   Companies
                 </span>
-                <span className="text-xl font-extrabold text-[#031130]">{dbStatus.companiesCount}</span>
+                <span className="text-xl font-extrabold text-[#111111]">{dbStatus.companiesCount}</span>
               </div>
 
-              <div className="p-4 bg-[#F3F7FE] rounded-xl border border-slate-200 text-center">
-                <Layers size={18} className="mx-auto text-[#185DF1] mb-1.5" />
+              <div className="p-4 bg-[#F7F7F7] rounded-xl border border-slate-200 text-center">
+                <Layers size={18} className="mx-auto text-[#111111] mb-1.5" />
                 <span className="text-[11px] font-bold text-slate-500 block uppercase tracking-wider">
                   Categories
                 </span>
-                <span className="text-xl font-extrabold text-[#031130]">{dbStatus.categoriesCount}</span>
+                <span className="text-xl font-extrabold text-[#111111]">{dbStatus.categoriesCount}</span>
               </div>
 
-              <div className="p-4 bg-[#F3F7FE] rounded-xl border border-slate-200 text-center">
+              <div className="p-4 bg-[#F7F7F7] rounded-xl border border-slate-200 text-center">
                 <ShieldAlert size={18} className="mx-auto text-amber-500 mb-1.5" />
                 <span className="text-[11px] font-bold text-slate-500 block uppercase tracking-wider">
                   Approvals
                 </span>
-                <span className="text-xl font-extrabold text-[#031130]">
+                <span className="text-xl font-extrabold text-[#111111]">
                   {dbStatus.pendingApprovalsCount}
                 </span>
               </div>
@@ -259,7 +259,7 @@ export default function SuperAdminDatabasePage() {
           {/* BACKUP ACTIONS */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 p-6 bg-[#F8FAFC] rounded-2xl border border-slate-200">
             <div>
-              <h3 className="text-base font-bold text-[#031130] mb-1">
+              <h3 className="text-base font-bold text-[#111111] mb-1">
                 Generate Backup Snapshot
               </h3>
               <p className="text-slate-500 text-xs">
@@ -271,7 +271,7 @@ export default function SuperAdminDatabasePage() {
               type="button"
               onClick={handleTriggerBackup}
               disabled={backupLoading}
-              className="bg-[#185DF1] hover:bg-[#031130] text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shadow-blue-500/20 flex items-center gap-2 text-xs disabled:opacity-50 shrink-0"
+              className="bg-[#111111] hover:bg-[#111111] text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shadow-neutral-500/20 flex items-center gap-2 text-xs disabled:opacity-50 shrink-0"
             >
               {backupLoading ? (
                 <RefreshCw size={15} className="animate-spin" />

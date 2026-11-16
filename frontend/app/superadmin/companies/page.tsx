@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import SuperAdminNav from "@/components/layout/SuperAdminNav";
 import CompanyLogoUploader from "@/components/ui/CompanyLogoUploader";
+import CompanyAvatar from "@/components/ui/CompanyAvatar";
 
 export default function SuperAdminCompaniesPage() {
   const router = useRouter();
@@ -207,11 +208,11 @@ export default function SuperAdminCompaniesPage() {
         </button>
 
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#185DF1] flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-neutral-50 text-[#111111] flex items-center justify-center font-bold">
             <Building2 size={20} />
           </div>
           <div>
-            <h3 className="text-xl font-extrabold text-[#031130]">
+            <h3 className="text-xl font-extrabold text-[#111111]">
               {modalMode === "create" ? "Register New Company" : "Edit Company Profile"}
             </h3>
             <p className="text-xs text-slate-500">
@@ -231,7 +232,7 @@ export default function SuperAdminCompaniesPage() {
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="e.g. Commercial Bank of Ethiopia (CBE)"
-              className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+              className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
             />
           </div>
 
@@ -244,7 +245,7 @@ export default function SuperAdminCompaniesPage() {
               value={companyWebsite}
               onChange={(e) => setCompanyWebsite(e.target.value)}
               placeholder="https://company.et"
-              className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+              className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
             />
           </div>
 
@@ -264,7 +265,7 @@ export default function SuperAdminCompaniesPage() {
               value={companyDescription}
               onChange={(e) => setCompanyDescription(e.target.value)}
               placeholder="Brief overview of the organization, core industry focus, and mission..."
-              className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl p-3 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+              className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl p-3 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
             />
           </div>
 
@@ -279,7 +280,7 @@ export default function SuperAdminCompaniesPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-2.5 text-xs font-bold bg-[#185DF1] hover:bg-[#031130] text-white rounded-xl transition-all shadow-md shadow-blue-500/20 disabled:opacity-50"
+              className="px-6 py-2.5 text-xs font-bold bg-[#111111] hover:bg-[#111111] text-white rounded-xl transition-all shadow-md shadow-neutral-500/20 disabled:opacity-50"
             >
               {submitting ? "Saving..." : modalMode === "create" ? "Register Company" : "Save Changes"}
             </button>
@@ -290,16 +291,16 @@ export default function SuperAdminCompaniesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       <SuperAdminNav />
 
       {/* --- HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-10 pb-20 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-10 pb-20 px-4 text-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <Link
               href="/superadmin/dashboard"
-              className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium mb-4 text-xs transition-colors"
+              className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium mb-4 text-xs transition-colors"
             >
               <ArrowLeft size={14} /> Back to command center
             </Link>
@@ -311,7 +312,7 @@ export default function SuperAdminCompaniesPage() {
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                   Companies & Employers Directory
                 </h1>
-                <p className="text-blue-100/80 text-xs md:text-sm mt-0.5">
+                <p className="text-neutral-100/80 text-xs md:text-sm mt-0.5">
                   Register, edit, upload device logos, and oversee partner organizations.
                 </p>
               </div>
@@ -321,7 +322,7 @@ export default function SuperAdminCompaniesPage() {
           <button
             type="button"
             onClick={openCreateModal}
-            className="bg-white text-[#185DF1] hover:bg-blue-50 font-bold py-3 px-5 rounded-xl transition-all shadow-md flex items-center gap-2 text-xs w-fit"
+            className="bg-white text-[#111111] hover:bg-neutral-50 font-bold py-3 px-5 rounded-xl transition-all shadow-md flex items-center gap-2 text-xs w-fit"
           >
             <PlusCircle size={16} /> Register New Company
           </button>
@@ -332,8 +333,8 @@ export default function SuperAdminCompaniesPage() {
       <div className="max-w-7xl mx-auto px-4 -mt-10">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 md:p-8">
           {actionMessage && (
-            <div className="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
-              <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+            <div className="mb-6 bg-neutral-50 border border-neutral-200 text-neutral-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
+              <CheckCircle2 size={18} className="text-neutral-500 shrink-0" />
               <span>{actionMessage}</span>
             </div>
           )}
@@ -348,7 +349,7 @@ export default function SuperAdminCompaniesPage() {
           {/* Search Bar & Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <h2 className="text-lg font-bold text-[#031130]">
+              <h2 className="text-lg font-bold text-[#111111]">
                 Registered Employers ({filteredCompanies.length})
               </h2>
               <p className="text-xs text-slate-400">
@@ -363,7 +364,7 @@ export default function SuperAdminCompaniesPage() {
                 placeholder="Search by company name or website..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#185DF1] font-medium"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#111111] font-medium"
               />
             </div>
           </div>
@@ -371,7 +372,7 @@ export default function SuperAdminCompaniesPage() {
           {/* Companies Grid */}
           {loading ? (
             <div className="py-16 text-center text-slate-400 font-medium">
-              <div className="w-10 h-10 border-4 border-[#185DF1] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+              <div className="w-10 h-10 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
               Loading partner organizations...
             </div>
           ) : filteredCompanies.length > 0 ? (
@@ -379,37 +380,25 @@ export default function SuperAdminCompaniesPage() {
               {filteredCompanies.map((comp) => (
                 <div
                   key={comp.id}
-                  className="p-6 bg-[#F8FAFC] hover:bg-white rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:shadow-lg transition-all duration-200 flex flex-col justify-between"
+                  className="p-6 bg-[#F8FAFC] hover:bg-white rounded-2xl border border-slate-200/80 hover:border-neutral-300 hover:shadow-lg transition-all duration-200 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-4 mb-4">
                       {/* Logo or Initials Avatar */}
-                      <div className="w-14 h-14 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-center justify-center p-1.5 shrink-0 overflow-hidden">
-                        {comp.logoUrl ? (
-                          /* eslint-disable-next-line @next/next/no-img-element */
-                          <img
-                            src={comp.logoUrl}
-                            alt={comp.name}
-                            className="w-full h-full object-contain"
-                            onError={(e) => {
-                              // If image fails, show initials
-                              e.currentTarget.style.display = "none";
-                            }}
-                          />
-                        ) : (
-                          <span className="font-extrabold text-xl text-[#185DF1] uppercase">
-                            {comp.name ? comp.name.substring(0, 2) : "CO"}
-                          </span>
-                        )}
-                      </div>
+                      <CompanyAvatar
+                        name={comp.name}
+                        logoUrl={comp.logoUrl}
+                        fallback="CO"
+                        className="w-14 h-14 rounded-2xl border border-slate-200 shadow-sm shrink-0 text-xl text-[#111111]"
+                      />
 
-                      <span className="text-xs font-bold text-slate-600 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100 flex items-center gap-1">
-                        <Briefcase size={12} className="text-[#185DF1]" />
+                      <span className="text-xs font-bold text-slate-600 bg-neutral-50 px-2.5 py-1 rounded-lg border border-neutral-100 flex items-center gap-1">
+                        <Briefcase size={12} className="text-[#111111]" />
                         {comp.jobs ? comp.jobs.length : 0} Vacancies
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-[#031130] text-base hover:text-[#185DF1] transition-colors mb-1">
+                    <h3 className="font-bold text-[#111111] text-base hover:text-[#111111] transition-colors mb-1">
                       <Link href={`/companies/${comp.id}`}>{comp.name}</Link>
                     </h3>
 
@@ -422,7 +411,7 @@ export default function SuperAdminCompaniesPage() {
                         href={comp.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-[#185DF1] hover:underline font-semibold"
+                        className="inline-flex items-center gap-1 text-xs text-[#111111] hover:underline font-semibold"
                       >
                         <Globe size={13} />
                         <span className="truncate max-w-[200px]">{comp.website}</span>
@@ -435,7 +424,7 @@ export default function SuperAdminCompaniesPage() {
                     <button
                       type="button"
                       onClick={() => openEditModal(comp)}
-                      className="p-2 bg-white hover:bg-blue-50 text-slate-600 hover:text-[#185DF1] rounded-xl border border-slate-200 transition-colors text-xs font-bold inline-flex items-center gap-1.5 shadow-sm"
+                      className="p-2 bg-white hover:bg-neutral-50 text-slate-600 hover:text-[#111111] rounded-xl border border-slate-200 transition-colors text-xs font-bold inline-flex items-center gap-1.5 shadow-sm"
                       title="Edit Company"
                     >
                       <Edit2 size={13} /> Edit
@@ -454,7 +443,7 @@ export default function SuperAdminCompaniesPage() {
               ))}
             </div>
           ) : (
-            <div className="py-16 text-center text-slate-400 font-medium bg-[#F3F7FE] rounded-2xl border border-slate-200">
+            <div className="py-16 text-center text-slate-400 font-medium bg-[#F7F7F7] rounded-2xl border border-slate-200">
               <AlertCircle size={36} className="mx-auto mb-2 text-slate-300" />
               <p>No employers found matching your search.</p>
             </div>

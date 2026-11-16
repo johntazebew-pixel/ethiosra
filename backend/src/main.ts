@@ -2,8 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
-import { existsSync, mkdirSync } from 'fs';
+import { uploadDirectory } from './uploads/upload-storage.js';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -16,11 +15,7 @@ async function bootstrap() {
   });
 
   // 2. Static File Serving for Uploaded Company Logos and Media
-  const uploadDir = join(process.cwd(), 'uploads');
-  if (!existsSync(uploadDir)) {
-    mkdirSync(uploadDir, { recursive: true });
-  }
-  app.useStaticAssets(uploadDir, {
+  app.useStaticAssets(uploadDirectory, {
     prefix: '/uploads/',
   });
 

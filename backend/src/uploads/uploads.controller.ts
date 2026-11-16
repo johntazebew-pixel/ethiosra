@@ -10,17 +10,11 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
-  Req,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { extname, join } from 'path';
-import { existsSync, mkdirSync } from 'fs';
+import { extname } from 'path';
 import { diskStorage } from 'multer';
-
-const uploadDirectory = join(process.cwd(), 'uploads');
-if (!existsSync(uploadDirectory)) {
-  mkdirSync(uploadDirectory, { recursive: true });
-}
+import { uploadDirectory } from './upload-storage.js';
 
 @Controller('uploads')
 export class UploadsController {
@@ -49,14 +43,12 @@ export class UploadsController {
       },
     }),
   )
-  uploadFile(@UploadedFile() file: any, @Req() req: any) {
+  uploadFile(@UploadedFile() file: any) {
     if (!file) {
       throw new BadRequestException('No file uploaded or invalid file format.');
     }
 
-    const host = req.get('host') || 'localhost:3333';
-    const protocol = req.protocol || 'http';
-    const fileUrl = `${protocol}://${host}/uploads/${file.filename}`;
+    const fileUrl = `/uploads/${file.filename}`;
 
     return {
       url: fileUrl,

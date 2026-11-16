@@ -39,6 +39,7 @@ import {
 import Link from "next/link";
 import { api } from "@/lib/api";
 import CompanyLogoUploader from "@/components/ui/CompanyLogoUploader";
+import CompanyAvatar from "@/components/ui/CompanyAvatar";
 
 const ETHIOPIAN_CITIES = [
   "Addis Ababa",
@@ -363,9 +364,9 @@ export default function PostJobPage() {
 
   if (dataLoading) {
     return (
-      <div className="min-h-screen bg-[#F3F7FE] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F7F7F7] flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#185DF1] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-12 h-12 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-slate-500 font-medium">Loading Job Posting Studio...</p>
         </div>
       </div>
@@ -373,14 +374,14 @@ export default function PostJobPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       {/* --- HERO HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-12 pb-24 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-12 pb-24 px-4 text-white">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <Link
               href="/admin/dashboard"
-              className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium text-sm transition-colors"
+              className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium text-sm transition-colors"
             >
               <ArrowLeft size={16} /> Back to dashboard
             </Link>
@@ -403,7 +404,7 @@ export default function PostJobPage() {
               <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                 Post a Professional Job Vacancy
               </h1>
-              <p className="text-blue-100/90 text-sm mt-1">
+              <p className="text-neutral-100/90 text-sm mt-1">
                 Publish high-visibility employment opportunities with multi-categories, compensation, and qualifications.
               </p>
             </div>
@@ -415,9 +416,9 @@ export default function PostJobPage() {
       <div className="max-w-5xl mx-auto px-4 -mt-12">
         {/* LIVE PREVIEW CARD (Conditional) */}
         {showPreview && (
-          <div className="mb-8 bg-white rounded-3xl p-6 md:p-8 shadow-xl border-2 border-[#185DF1] animate-in fade-in duration-200">
+          <div className="mb-8 bg-white rounded-3xl p-6 md:p-8 shadow-xl border-2 border-[#111111] animate-in fade-in duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#185DF1] flex items-center gap-1.5">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#111111] flex items-center gap-1.5">
                 <Sparkles size={16} /> Candidate Live Preview
               </span>
               <span className="text-xs text-slate-400">
@@ -427,15 +428,18 @@ export default function PostJobPage() {
 
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-blue-50 text-[#185DF1] font-black text-xl rounded-2xl flex items-center justify-center border border-blue-200 shadow-sm shrink-0 uppercase">
-                  {selectedCompany?.name ? selectedCompany.name.substring(0, 2) : "ET"}
-                </div>
+                <CompanyAvatar
+                  name={selectedCompany?.name}
+                  logoUrl={selectedCompany?.logoUrl}
+                  fallback="ET"
+                  className="w-14 h-14 bg-neutral-50 text-[#111111] text-xl rounded-2xl border border-neutral-200 shadow-sm shrink-0"
+                />
                 <div>
-                  <h3 className="text-xl font-extrabold text-[#031130]">
+                  <h3 className="text-xl font-extrabold text-[#111111]">
                     {title || "Untitled Job Vacancy"}
                   </h3>
                   <p className="text-slate-500 text-sm font-medium flex flex-wrap items-center gap-2 mt-1">
-                    <span className="font-bold text-[#185DF1]">
+                    <span className="font-bold text-[#111111]">
                       {selectedCompany?.name || "Select a Company"}
                     </span>
                     <span>•</span>
@@ -443,7 +447,7 @@ export default function PostJobPage() {
                       <MapPin size={14} /> {location} ({workplaceType})
                     </span>
                     <span>•</span>
-                    <span className="font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
+                    <span className="font-semibold text-neutral-700 bg-neutral-50 px-2 py-0.5 rounded-md">
                       {isSalaryNegotiable
                         ? "Salary Negotiable"
                         : `${salaryMin || "Min"} - ${salaryMax || "Max"} ${salaryCurrency}/${salaryPeriod.toLowerCase()}`}
@@ -458,7 +462,7 @@ export default function PostJobPage() {
                   return (
                     <span
                       key={id}
-                      className="text-[11px] font-bold bg-blue-50 text-[#185DF1] px-2.5 py-1 rounded-lg border border-blue-200"
+                      className="text-[11px] font-bold bg-neutral-50 text-[#111111] px-2.5 py-1 rounded-lg border border-neutral-200"
                     >
                       {cat?.name || "Category"}
                     </span>
@@ -472,8 +476,8 @@ export default function PostJobPage() {
         {/* MAIN FORM */}
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 md:p-10">
           {successMessage && (
-            <div className="mb-8 bg-emerald-50 border border-emerald-200 text-emerald-800 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
-              <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
+            <div className="mb-8 bg-neutral-50 border border-neutral-200 text-neutral-800 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
+              <CheckCircle2 size={20} className="text-neutral-500 shrink-0" />
               <span>{successMessage}</span>
             </div>
           )}
@@ -490,8 +494,8 @@ export default function PostJobPage() {
             {/* ============================================================== */}
             <div className="space-y-6">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-lg font-bold text-[#031130] flex items-center gap-2">
-                  <Briefcase size={20} className="text-[#185DF1]" />
+                <h2 className="text-lg font-bold text-[#111111] flex items-center gap-2">
+                  <Briefcase size={20} className="text-[#111111]" />
                   <span>1. Job Details & Multi-Category Selection</span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -511,7 +515,7 @@ export default function PostJobPage() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="e.g. Senior Backend Engineer (Node.js & PostgreSQL)"
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                   />
                 </div>
 
@@ -524,7 +528,7 @@ export default function PostJobPage() {
                     <button
                       type="button"
                       onClick={() => setQuickCompanyModalOpen(true)}
-                      className="text-xs font-bold text-[#185DF1] hover:underline flex items-center gap-1"
+                      className="text-xs font-bold text-[#111111] hover:underline flex items-center gap-1"
                     >
                       <PlusCircle size={13} /> + New Company
                     </button>
@@ -534,7 +538,7 @@ export default function PostJobPage() {
                     <select
                       value={companyId}
                       onChange={(e) => setCompanyId(e.target.value)}
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                     >
                       {companies.map((comp) => (
                         <option key={comp.id} value={comp.id}>
@@ -555,7 +559,7 @@ export default function PostJobPage() {
                     <select
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                     >
                       {ETHIOPIAN_CITIES.map((c) => (
                         <option key={c} value={c}>
@@ -572,7 +576,7 @@ export default function PostJobPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
                     <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                      <Layers size={16} className="text-[#185DF1]" />
+                      <Layers size={16} className="text-[#111111]" />
                       <span>Select Job Categories (Multi-select)</span>
                       <span className="text-red-500">*</span>
                     </label>
@@ -581,7 +585,7 @@ export default function PostJobPage() {
                     </p>
                   </div>
 
-                  <span className="text-xs font-bold bg-blue-100 text-[#185DF1] px-3 py-1 rounded-full w-fit">
+                  <span className="text-xs font-bold bg-neutral-100 text-[#111111] px-3 py-1 rounded-full w-fit">
                     {selectedCategoryIds.length} Selected
                   </span>
                 </div>
@@ -594,7 +598,7 @@ export default function PostJobPage() {
                     value={categorySearch}
                     onChange={(e) => setCategorySearch(e.target.value)}
                     placeholder="Search categories (e.g. Technology, Finance, Engineering, Healthcare)..."
-                    className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+                    className="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#111111]"
                   />
                 </div>
 
@@ -609,8 +613,8 @@ export default function PostJobPage() {
                         onClick={() => toggleCategory(cat.id)}
                         className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-150 border ${
                           isSelected
-                            ? "bg-[#185DF1] text-white border-[#185DF1] shadow-sm shadow-blue-500/20"
-                            : "bg-white text-slate-700 border-slate-200 hover:border-blue-300 hover:bg-blue-50/50"
+                            ? "bg-[#111111] text-white border-[#111111] shadow-sm shadow-neutral-500/20"
+                            : "bg-white text-slate-700 border-slate-200 hover:border-neutral-300 hover:bg-neutral-50/50"
                         }`}
                       >
                         {isSelected ? <Check size={13} /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>}
@@ -636,8 +640,8 @@ export default function PostJobPage() {
                         onClick={() => setWorkplaceType(wp.id)}
                         className={`py-3 px-2 rounded-xl text-xs font-bold border transition-all text-center ${
                           workplaceType === wp.id
-                            ? "bg-[#185DF1] text-white border-[#185DF1] shadow-md shadow-blue-500/20"
-                            : "bg-[#F3F7FE] text-slate-700 border-slate-200 hover:bg-slate-100"
+                            ? "bg-[#111111] text-white border-[#111111] shadow-md shadow-neutral-500/20"
+                            : "bg-[#F7F7F7] text-slate-700 border-slate-200 hover:bg-slate-100"
                         }`}
                       >
                         {wp.label}
@@ -654,7 +658,7 @@ export default function PostJobPage() {
                   <select
                     value={employmentType}
                     onChange={(e) => setEmploymentType(e.target.value)}
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                   >
                     {EMPLOYMENT_TYPES.map((et) => (
                       <option key={et.id} value={et.id}>
@@ -671,8 +675,8 @@ export default function PostJobPage() {
             {/* ============================================================== */}
             <div className="space-y-6">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-lg font-bold text-[#031130] flex items-center gap-2">
-                  <Award size={20} className="text-[#185DF1]" />
+                <h2 className="text-lg font-bold text-[#111111] flex items-center gap-2">
+                  <Award size={20} className="text-[#111111]" />
                   <span>2. Candidate Qualifications & Requirements</span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -689,7 +693,7 @@ export default function PostJobPage() {
                   <select
                     value={experienceLevel}
                     onChange={(e) => setExperienceLevel(e.target.value)}
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                   >
                     {EXPERIENCE_LEVELS.map((el) => (
                       <option key={el.id} value={el.id}>
@@ -707,7 +711,7 @@ export default function PostJobPage() {
                   <select
                     value={minExperienceYears}
                     onChange={(e) => setMinExperienceYears(Number(e.target.value))}
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                   >
                     <option value={0}>0 Years (Fresh Graduate)</option>
                     <option value={1}>1 Year</option>
@@ -728,7 +732,7 @@ export default function PostJobPage() {
                   <select
                     value={educationLevel}
                     onChange={(e) => setEducationLevel(e.target.value)}
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                   >
                     {EDUCATION_LEVELS.map((ed) => (
                       <option key={ed} value={ed}>
@@ -749,7 +753,7 @@ export default function PostJobPage() {
                     max={100}
                     value={positionsCount}
                     onChange={(e) => setPositionsCount(Number(e.target.value))}
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                   />
                 </div>
 
@@ -761,7 +765,7 @@ export default function PostJobPage() {
                   <select
                     value={genderPreference}
                     onChange={(e) => setGenderPreference(e.target.value)}
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                   >
                     <option value="ANY">Any (Equal Opportunity Employer)</option>
                     <option value="FEMALE">Female Candidates Strongly Encouraged</option>
@@ -787,12 +791,12 @@ export default function PostJobPage() {
                       }
                     }}
                     placeholder="Type a skill and press Enter (e.g. Next.js, Financial Audit, Sales)..."
-                    className="flex-1 bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+                    className="flex-1 bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
                   />
                   <button
                     type="button"
                     onClick={() => addSkill(skillInput)}
-                    className="bg-slate-900 hover:bg-[#185DF1] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-colors"
+                    className="bg-slate-900 hover:bg-[#111111] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-colors"
                   >
                     Add Skill
                   </button>
@@ -803,7 +807,7 @@ export default function PostJobPage() {
                   {skillsList.map((skill) => (
                     <span
                       key={skill}
-                      className="inline-flex items-center gap-1.5 bg-blue-50 text-[#185DF1] border border-blue-200 px-3 py-1 rounded-lg text-xs font-bold"
+                      className="inline-flex items-center gap-1.5 bg-neutral-50 text-[#111111] border border-neutral-200 px-3 py-1 rounded-lg text-xs font-bold"
                     >
                       <Award size={13} />
                       <span>{skill}</span>
@@ -842,8 +846,8 @@ export default function PostJobPage() {
             {/* ============================================================== */}
             <div className="space-y-6">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-lg font-bold text-[#031130] flex items-center gap-2">
-                  <DollarSign size={20} className="text-[#185DF1]" />
+                <h2 className="text-lg font-bold text-[#111111] flex items-center gap-2">
+                  <DollarSign size={20} className="text-[#111111]" />
                   <span>3. Compensation, Salary Range & Benefits</span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -852,12 +856,12 @@ export default function PostJobPage() {
               </div>
 
               {/* Salary Negotiable Toggle */}
-              <div className="p-4 bg-emerald-50/70 border border-emerald-200 rounded-2xl flex items-center justify-between gap-4">
+              <div className="p-4 bg-neutral-50/70 border border-neutral-200 rounded-2xl flex items-center justify-between gap-4">
                 <div>
-                  <p className="font-bold text-emerald-950 text-sm">
+                  <p className="font-bold text-neutral-950 text-sm">
                     Salary is Negotiable / Competitive
                   </p>
-                  <p className="text-emerald-800/80 text-xs mt-0.5">
+                  <p className="text-neutral-800/80 text-xs mt-0.5">
                     If enabled, &quot;Competitive / Negotiable&quot; will be displayed to job seekers.
                   </p>
                 </div>
@@ -865,7 +869,7 @@ export default function PostJobPage() {
                   type="checkbox"
                   checked={isSalaryNegotiable}
                   onChange={(e) => setIsSalaryNegotiable(e.target.checked)}
-                  className="w-5 h-5 accent-[#185DF1] rounded cursor-pointer"
+                  className="w-5 h-5 accent-[#111111] rounded cursor-pointer"
                 />
               </div>
 
@@ -947,14 +951,14 @@ export default function PostJobPage() {
                         onClick={() => toggleBenefit(benefit)}
                         className={`flex items-center gap-2.5 p-3 rounded-xl border text-xs font-semibold text-left transition-all ${
                           isChecked
-                            ? "bg-blue-50/80 border-[#185DF1] text-[#185DF1]"
-                            : "bg-[#F3F7FE] border-slate-200 text-slate-700 hover:bg-slate-100"
+                            ? "bg-neutral-50/80 border-[#111111] text-[#111111]"
+                            : "bg-[#F7F7F7] border-slate-200 text-slate-700 hover:bg-slate-100"
                         }`}
                       >
                         <div
                           className={`w-4 h-4 rounded flex items-center justify-center border ${
                             isChecked
-                              ? "bg-[#185DF1] border-[#185DF1] text-white"
+                              ? "bg-[#111111] border-[#111111] text-white"
                               : "border-slate-300 bg-white"
                           }`}
                         >
@@ -973,8 +977,8 @@ export default function PostJobPage() {
             {/* ============================================================== */}
             <div className="space-y-6">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-lg font-bold text-[#031130] flex items-center gap-2">
-                  <FileText size={20} className="text-[#185DF1]" />
+                <h2 className="text-lg font-bold text-[#111111] flex items-center gap-2">
+                  <FileText size={20} className="text-[#111111]" />
                   <span>4. Job Description & Responsibilities</span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -993,7 +997,7 @@ export default function PostJobPage() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Provide an engaging overview of the role, team, and organizational mission..."
-                  className="w-full bg-[#F3F7FE] border border-slate-200 rounded-2xl p-4 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm leading-relaxed"
+                  className="w-full bg-[#F7F7F7] border border-slate-200 rounded-2xl p-4 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm leading-relaxed"
                 />
               </div>
 
@@ -1007,7 +1011,7 @@ export default function PostJobPage() {
                   value={responsibilities}
                   onChange={(e) => setResponsibilities(e.target.value)}
                   placeholder="• Lead architecture and implementation of scalable web services&#10;• Collaborate with cross-functional product and design teams&#10;• Maintain continuous integration and automated test suites"
-                  className="w-full bg-[#F3F7FE] border border-slate-200 rounded-2xl p-4 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm leading-relaxed"
+                  className="w-full bg-[#F7F7F7] border border-slate-200 rounded-2xl p-4 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm leading-relaxed"
                 />
               </div>
 
@@ -1021,7 +1025,7 @@ export default function PostJobPage() {
                   value={qualifications}
                   onChange={(e) => setQualifications(e.target.value)}
                   placeholder="• Bachelor's degree in Computer Science, Software Engineering, or related field&#10;• 3+ years of experience with React, Node.js, and relational databases&#10;• Strong communication skills in English and Amharic"
-                  className="w-full bg-[#F3F7FE] border border-slate-200 rounded-2xl p-4 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm leading-relaxed"
+                  className="w-full bg-[#F7F7F7] border border-slate-200 rounded-2xl p-4 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm leading-relaxed"
                 />
               </div>
             </div>
@@ -1031,8 +1035,8 @@ export default function PostJobPage() {
             {/* ============================================================== */}
             <div className="space-y-6">
               <div className="border-b border-slate-100 pb-3">
-                <h2 className="text-lg font-bold text-[#031130] flex items-center gap-2">
-                  <Send size={20} className="text-[#185DF1]" />
+                <h2 className="text-lg font-bold text-[#111111] flex items-center gap-2">
+                  <Send size={20} className="text-[#111111]" />
                   <span>5. Application Channel & Deadline</span>
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -1049,7 +1053,7 @@ export default function PostJobPage() {
                   <select
                     value={applicationMethod}
                     onChange={(e) => setApplicationMethod(e.target.value as any)}
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm cursor-pointer"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm cursor-pointer"
                   >
                     <option value="WEBSITE">Official Website / Career Portal</option>
                     <option value="EMAIL">Direct Email Application</option>
@@ -1070,7 +1074,7 @@ export default function PostJobPage() {
                       required
                       value={deadlineDate}
                       onChange={(e) => setDeadlineDate(e.target.value)}
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                     />
                   </div>
                 </div>
@@ -1094,7 +1098,7 @@ export default function PostJobPage() {
                           ? "https://mailto:recruitment@company.com"
                           : "https://company.com/careers/apply"
                       }
-                      className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] focus:bg-white transition-all text-sm"
+                      className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] focus:bg-white transition-all text-sm"
                     />
                   </div>
                 </div>
@@ -1103,7 +1107,7 @@ export default function PostJobPage() {
               {/* Publication Status Selector */}
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <p className="font-bold text-[#031130] text-sm">Listing Visibility</p>
+                  <p className="font-bold text-[#111111] text-sm">Listing Visibility</p>
                   <p className="text-slate-500 text-xs mt-0.5">
                     Choose whether this job is published live immediately or saved as draft.
                   </p>
@@ -1114,7 +1118,7 @@ export default function PostJobPage() {
                     onClick={() => setPublishStatus("PUBLISHED")}
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                       publishStatus === "PUBLISHED"
-                        ? "bg-emerald-600 text-white shadow-sm"
+                        ? "bg-neutral-600 text-white shadow-sm"
                         : "bg-white text-slate-600 border border-slate-200"
                     }`}
                   >
@@ -1153,7 +1157,7 @@ export default function PostJobPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full sm:w-auto bg-[#185DF1] hover:bg-[#031130] text-white font-bold py-3.5 px-8 rounded-xl transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 text-sm disabled:opacity-50"
+                  className="w-full sm:w-auto bg-[#111111] hover:bg-[#111111] text-white font-bold py-3.5 px-8 rounded-xl transition-all shadow-md shadow-neutral-500/20 flex items-center justify-center gap-2 text-sm disabled:opacity-50"
                 >
                   <PlusCircle size={18} />
                   <span>{loading ? "Publishing Opportunity..." : "Publish Job Vacancy"}</span>
@@ -1185,11 +1189,11 @@ export default function PostJobPage() {
               </button>
 
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#185DF1] flex items-center justify-center font-bold">
+                <div className="w-10 h-10 rounded-xl bg-neutral-50 text-[#111111] flex items-center justify-center font-bold">
                   <Building2 size={20} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-extrabold text-[#031130]">Quick Register Company</h3>
+                  <h3 className="text-xl font-extrabold text-[#111111]">Quick Register Company</h3>
                   <p className="text-xs text-slate-500">
                     Add organization branding with device logo upload for this vacancy.
                   </p>
@@ -1214,7 +1218,7 @@ export default function PostJobPage() {
                     value={quickCompName}
                     onChange={(e) => setQuickCompName(e.target.value)}
                     placeholder="e.g. Ethiopian Airlines Group"
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
                   />
                 </div>
 
@@ -1227,7 +1231,7 @@ export default function PostJobPage() {
                     value={quickCompWebsite}
                     onChange={(e) => setQuickCompWebsite(e.target.value)}
                     placeholder="https://company.et"
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
                   />
                 </div>
 
@@ -1248,7 +1252,7 @@ export default function PostJobPage() {
                   <button
                     type="submit"
                     disabled={savingQuickComp}
-                    className="px-6 py-2.5 text-xs font-bold bg-[#185DF1] hover:bg-[#031130] text-white rounded-xl transition-all shadow-md shadow-blue-500/20 disabled:opacity-50"
+                    className="px-6 py-2.5 text-xs font-bold bg-[#111111] hover:bg-[#111111] text-white rounded-xl transition-all shadow-md shadow-neutral-500/20 disabled:opacity-50"
                   >
                     {savingQuickComp ? "Saving..." : "Save & Select Company"}
                   </button>

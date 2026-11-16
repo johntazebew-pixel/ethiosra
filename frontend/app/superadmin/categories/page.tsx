@@ -166,16 +166,16 @@ export default function SuperAdminCategoriesPage() {
   }, [categories, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       <SuperAdminNav />
 
       {/* --- HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-10 pb-20 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-10 pb-20 px-4 text-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <Link
               href="/superadmin/dashboard"
-              className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium mb-4 text-xs transition-colors"
+              className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium mb-4 text-xs transition-colors"
             >
               <ArrowLeft size={14} /> Back to command center
             </Link>
@@ -187,7 +187,7 @@ export default function SuperAdminCategoriesPage() {
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                   Job Categories & Taxonomies
                 </h1>
-                <p className="text-blue-100/80 text-xs md:text-sm mt-0.5">
+                <p className="text-neutral-100/80 text-xs md:text-sm mt-0.5">
                   Organize platform specializations, industry tags, and job classifications.
                 </p>
               </div>
@@ -197,7 +197,7 @@ export default function SuperAdminCategoriesPage() {
           <button
             type="button"
             onClick={openCreateModal}
-            className="bg-white text-[#185DF1] hover:bg-blue-50 font-bold py-3 px-5 rounded-xl transition-all shadow-md flex items-center gap-2 text-xs w-fit"
+            className="bg-white text-[#111111] hover:bg-neutral-50 font-bold py-3 px-5 rounded-xl transition-all shadow-md flex items-center gap-2 text-xs w-fit"
           >
             <PlusCircle size={16} /> Add Category
           </button>
@@ -208,8 +208,8 @@ export default function SuperAdminCategoriesPage() {
       <div className="max-w-7xl mx-auto px-4 -mt-10">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 md:p-8">
           {actionMessage && (
-            <div className="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
-              <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+            <div className="mb-6 bg-neutral-50 border border-neutral-200 text-neutral-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
+              <CheckCircle2 size={18} className="text-neutral-500 shrink-0" />
               <span>{actionMessage}</span>
             </div>
           )}
@@ -222,7 +222,7 @@ export default function SuperAdminCategoriesPage() {
 
           {/* Search Bar & Count */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-100">
-            <h2 className="text-lg font-bold text-[#031130]">
+            <h2 className="text-lg font-bold text-[#111111]">
               Active Categories ({filteredCategories.length})
             </h2>
 
@@ -233,14 +233,14 @@ export default function SuperAdminCategoriesPage() {
                 placeholder="Search by category name or type..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#185DF1] font-medium"
+                className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#111111] font-medium"
               />
             </div>
           </div>
 
           {loading ? (
             <div className="py-16 text-center text-slate-400 font-medium">
-              <div className="w-10 h-10 border-4 border-[#185DF1] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+              <div className="w-10 h-10 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
               Loading categories...
             </div>
           ) : filteredCategories.length > 0 ? (
@@ -248,7 +248,7 @@ export default function SuperAdminCategoriesPage() {
               {filteredCategories.map((cat) => (
                 <div
                   key={cat.id}
-                  className="bg-[#F8FAFC] hover:bg-white p-5 rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between"
+                  className="bg-[#F8FAFC] hover:bg-white p-5 rounded-2xl border border-slate-200/80 hover:border-neutral-300 hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-2">
@@ -257,8 +257,8 @@ export default function SuperAdminCategoriesPage() {
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-sm text-[#031130] flex items-center gap-1.5 mt-1">
-                      <Tag size={14} className="text-[#185DF1] shrink-0" />
+                    <h3 className="font-bold text-sm text-[#111111] flex items-center gap-1.5 mt-1">
+                      <Tag size={14} className="text-[#111111] shrink-0" />
                       <span>{cat.name}</span>
                     </h3>
                   </div>
@@ -267,7 +267,7 @@ export default function SuperAdminCategoriesPage() {
                     <button
                       type="button"
                       onClick={() => openEditModal(cat)}
-                      className="p-1.5 bg-white hover:bg-blue-50 text-slate-500 hover:text-[#185DF1] rounded-lg border border-slate-200 transition-colors text-xs font-bold inline-flex items-center gap-1"
+                      className="p-1.5 bg-white hover:bg-neutral-50 text-slate-500 hover:text-[#111111] rounded-lg border border-slate-200 transition-colors text-xs font-bold inline-flex items-center gap-1"
                       title="Edit Category"
                     >
                       <Edit2 size={12} />
@@ -286,7 +286,7 @@ export default function SuperAdminCategoriesPage() {
               ))}
             </div>
           ) : (
-            <div className="py-16 text-center text-slate-400 font-medium bg-[#F3F7FE] rounded-2xl border border-slate-200">
+            <div className="py-16 text-center text-slate-400 font-medium bg-[#F7F7F7] rounded-2xl border border-slate-200">
               <AlertCircle size={36} className="mx-auto mb-2 text-slate-300" />
               <p>No categories found matching your search.</p>
             </div>
@@ -317,11 +317,11 @@ export default function SuperAdminCategoriesPage() {
               </button>
 
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#185DF1] flex items-center justify-center font-bold">
+                <div className="w-10 h-10 rounded-xl bg-neutral-50 text-[#111111] flex items-center justify-center font-bold">
                   <Layers size={20} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-extrabold text-[#031130]">
+                  <h3 className="text-xl font-extrabold text-[#111111]">
                     {modalMode === "create" ? "Add New Category" : "Edit Category"}
                   </h3>
                   <p className="text-xs text-slate-500">
@@ -341,7 +341,7 @@ export default function SuperAdminCategoriesPage() {
                     value={categoryName}
                     onChange={(e) => setCategoryName(e.target.value)}
                     placeholder="e.g. Artificial Intelligence & Data Science"
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1]"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111]"
                   />
                 </div>
 
@@ -352,7 +352,7 @@ export default function SuperAdminCategoriesPage() {
                   <select
                     value={categoryType}
                     onChange={(e) => setCategoryType(e.target.value)}
-                    className="w-full bg-[#F3F7FE] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#185DF1] cursor-pointer"
+                    className="w-full bg-[#F7F7F7] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#111111] cursor-pointer"
                   >
                     <option value="DEPARTMENT">Department / Sector</option>
                     <option value="EXPERIENCE">Experience Level</option>
@@ -373,7 +373,7 @@ export default function SuperAdminCategoriesPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-6 py-2.5 text-xs font-bold bg-[#185DF1] hover:bg-[#031130] text-white rounded-xl transition-all shadow-md shadow-blue-500/20 disabled:opacity-50"
+                    className="px-6 py-2.5 text-xs font-bold bg-[#111111] hover:bg-[#111111] text-white rounded-xl transition-all shadow-md shadow-neutral-500/20 disabled:opacity-50"
                   >
                     {submitting ? "Saving..." : modalMode === "create" ? "Create Category" : "Save Changes"}
                   </button>

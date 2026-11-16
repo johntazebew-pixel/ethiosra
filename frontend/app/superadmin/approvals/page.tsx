@@ -78,16 +78,16 @@ export default function SuperAdminApprovalsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       <SuperAdminNav />
 
       {/* --- HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-10 pb-20 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-10 pb-20 px-4 text-white">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <Link
               href="/superadmin/dashboard"
-              className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium mb-4 text-xs transition-colors"
+              className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium mb-4 text-xs transition-colors"
             >
               <ArrowLeft size={14} /> Back to command center
             </Link>
@@ -99,7 +99,7 @@ export default function SuperAdminApprovalsPage() {
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                   Job Deletion Approvals Queue
                 </h1>
-                <p className="text-blue-100/80 text-xs md:text-sm mt-0.5">
+                <p className="text-neutral-100/80 text-xs md:text-sm mt-0.5">
                   Review and authorize or reject pending vacancy removal requests submitted by administrators.
                 </p>
               </div>
@@ -107,7 +107,7 @@ export default function SuperAdminApprovalsPage() {
           </div>
 
           <div className="text-right">
-            <span className="text-[11px] font-bold text-blue-200 uppercase tracking-wider block">
+            <span className="text-[11px] font-bold text-neutral-200 uppercase tracking-wider block">
               Pending Authorization
             </span>
             <span className="text-3xl font-black text-amber-300">{pendingJobs.length}</span>
@@ -119,8 +119,8 @@ export default function SuperAdminApprovalsPage() {
       <div className="max-w-6xl mx-auto px-4 -mt-10">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 md:p-8">
           {actionMessage && (
-            <div className="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
-              <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+            <div className="mb-6 bg-neutral-50 border border-neutral-200 text-neutral-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-2">
+              <CheckCircle2 size={18} className="text-neutral-500 shrink-0" />
               <span>{actionMessage}</span>
             </div>
           )}
@@ -131,13 +131,13 @@ export default function SuperAdminApprovalsPage() {
             </div>
           )}
 
-          <h2 className="text-lg font-bold text-[#031130] mb-6">
+          <h2 className="text-lg font-bold text-[#111111] mb-6">
             Pending Review Requests ({pendingJobs.length})
           </h2>
 
           {loading ? (
             <div className="py-16 text-center text-slate-400 font-medium">
-              <div className="w-10 h-10 border-4 border-[#185DF1] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+              <div className="w-10 h-10 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
               Loading approval requests...
             </div>
           ) : pendingJobs.length > 0 ? (
@@ -148,14 +148,14 @@ export default function SuperAdminApprovalsPage() {
                   className="p-6 bg-[#F8FAFC] rounded-2xl border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-6"
                 >
                   <div className="flex items-start gap-4 flex-1">
-                    <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center text-[#185DF1] font-bold shadow-sm shrink-0 uppercase border border-slate-200">
+                    <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center text-[#111111] font-bold shadow-sm shrink-0 uppercase border border-slate-200">
                       {job.company?.name ? job.company.name.substring(0, 2) : "ET"}
                     </div>
                     <div className="space-y-2 flex-1">
                       <div>
-                        <h3 className="font-bold text-[#031130] text-lg">{job.title}</h3>
+                        <h3 className="font-bold text-[#111111] text-lg">{job.title}</h3>
                         <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
-                          <Building2 size={13} className="text-[#185DF1]" />
+                          <Building2 size={13} className="text-[#111111]" />
                           <span>{job.company?.name || "Independent Employer"}</span>
                           <span>•</span>
                           <span>Deadline: {new Date(job.deadlineDate).toLocaleDateString()}</span>
@@ -185,7 +185,7 @@ export default function SuperAdminApprovalsPage() {
                     <button
                       type="button"
                       onClick={() => handleReview(job.id, true)}
-                      className="bg-[#185DF1] hover:bg-[#031130] text-white font-bold py-2.5 px-5 rounded-xl transition-all text-xs shadow-md shadow-blue-500/20 flex items-center gap-1.5"
+                      className="bg-[#111111] hover:bg-[#111111] text-white font-bold py-2.5 px-5 rounded-xl transition-all text-xs shadow-md shadow-neutral-500/20 flex items-center gap-1.5"
                     >
                       <CheckCircle size={15} />
                       <span>Approve Removal</span>
@@ -195,7 +195,7 @@ export default function SuperAdminApprovalsPage() {
               ))}
             </div>
           ) : (
-            <div className="py-16 text-center text-slate-400 font-medium bg-[#F3F7FE] rounded-2xl border border-slate-200">
+            <div className="py-16 text-center text-slate-400 font-medium bg-[#F7F7F7] rounded-2xl border border-slate-200">
               <AlertCircle size={36} className="mx-auto mb-2 text-slate-300" />
               <p>No pending deletion requests found. All listings are in good standing.</p>
             </div>

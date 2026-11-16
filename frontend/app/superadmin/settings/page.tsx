@@ -83,6 +83,13 @@ export default function SuperAdminSettingsPage() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("branding-change", {
+            detail: systemLogoUrl.trim(),
+          })
+        );
+      }
       setSuccessMessage("Global platform settings successfully saved and applied.");
     } catch (err: any) {
       setErrorMessage(
@@ -94,15 +101,15 @@ export default function SuperAdminSettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F7FE] pb-24">
+    <div className="min-h-screen bg-[#F7F7F7] pb-24">
       <SuperAdminNav />
 
       {/* --- HEADER --- */}
-      <div className="bg-gradient-to-br from-[#031130] via-[#081d4a] to-[#185DF1] pt-10 pb-20 px-4 text-white">
+      <div className="bg-gradient-to-br from-[#111111] via-[#333333] to-[#111111] pt-10 pb-20 px-4 text-white">
         <div className="max-w-4xl mx-auto">
           <Link
             href="/superadmin/dashboard"
-            className="inline-flex items-center gap-1.5 text-blue-200 hover:text-white font-medium mb-4 text-xs transition-colors"
+            className="inline-flex items-center gap-1.5 text-neutral-200 hover:text-white font-medium mb-4 text-xs transition-colors"
           >
             <ArrowLeft size={14} /> Back to command center
           </Link>
@@ -114,7 +121,7 @@ export default function SuperAdminSettingsPage() {
               <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
                 Global Platform Settings
               </h1>
-              <p className="text-blue-100/80 text-xs md:text-sm mt-0.5">
+              <p className="text-neutral-100/80 text-xs md:text-sm mt-0.5">
                 Configure platform branding, default localization, and external broadcast channels.
               </p>
             </div>
@@ -126,8 +133,8 @@ export default function SuperAdminSettingsPage() {
       <div className="max-w-4xl mx-auto px-4 -mt-10">
         <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 md:p-10">
           {successMessage && (
-            <div className="mb-8 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
-              <CheckCircle2 size={20} className="text-emerald-500 shrink-0" />
+            <div className="mb-8 bg-neutral-50 border border-neutral-200 text-neutral-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
+              <CheckCircle2 size={20} className="text-neutral-500 shrink-0" />
               <span>{successMessage}</span>
             </div>
           )}
@@ -141,8 +148,8 @@ export default function SuperAdminSettingsPage() {
           <form onSubmit={handleSave} className="space-y-8">
             {/* Branding Section */}
             <div>
-              <h3 className="text-lg font-bold text-[#031130] mb-4 flex items-center gap-2">
-                <ImageIcon size={18} className="text-[#185DF1]" />
+              <h3 className="text-lg font-bold text-[#111111] mb-4 flex items-center gap-2">
+                <ImageIcon size={18} className="text-[#111111]" />
                 <span>Platform Branding & Visual Identity</span>
               </h3>
               <div className="space-y-4">
@@ -168,7 +175,7 @@ export default function SuperAdminSettingsPage() {
                     value={heroBannerImages}
                     onChange={(e) => setHeroBannerImages(e.target.value)}
                     placeholder="https://example.com/hero1.jpg, https://example.com/hero2.jpg"
-                    className="w-full px-4 py-2.5 bg-[#F3F7FE] border border-slate-200 rounded-xl text-slate-900 font-medium text-xs focus:outline-none focus:border-[#185DF1]"
+                    className="w-full px-4 py-2.5 bg-[#F7F7F7] border border-slate-200 rounded-xl text-slate-900 font-medium text-xs focus:outline-none focus:border-[#111111]"
                   />
                 </div>
               </div>
@@ -178,8 +185,8 @@ export default function SuperAdminSettingsPage() {
 
             {/* Localization Section */}
             <div>
-              <h3 className="text-lg font-bold text-[#031130] mb-4 flex items-center gap-2">
-                <Globe size={18} className="text-[#185DF1]" />
+              <h3 className="text-lg font-bold text-[#111111] mb-4 flex items-center gap-2">
+                <Globe size={18} className="text-[#111111]" />
                 <span>Localization & Language Defaults</span>
               </h3>
               <div className="max-w-md">
@@ -189,7 +196,7 @@ export default function SuperAdminSettingsPage() {
                 <select
                   value={defaultLanguage}
                   onChange={(e) => setDefaultLanguage(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-[#F3F7FE] border border-slate-200 rounded-xl text-slate-900 font-medium text-xs focus:outline-none focus:border-[#185DF1] cursor-pointer"
+                  className="w-full px-4 py-2.5 bg-[#F7F7F7] border border-slate-200 rounded-xl text-slate-900 font-medium text-xs focus:outline-none focus:border-[#111111] cursor-pointer"
                 >
                   <option value="EN">English (EN)</option>
                   <option value="AM">አማርኛ - Amharic (AM)</option>
@@ -204,11 +211,11 @@ export default function SuperAdminSettingsPage() {
 
             {/* Telegram Channel Integration */}
             <div>
-              <h3 className="text-lg font-bold text-[#031130] mb-4 flex items-center gap-2">
-                <Send size={18} className="text-[#185DF1]" />
+              <h3 className="text-lg font-bold text-[#111111] mb-4 flex items-center gap-2">
+                <Send size={18} className="text-[#111111]" />
                 <span>Telegram Bot & Push Broadcast</span>
               </h3>
-              <div className="p-4 bg-blue-50/70 border border-blue-200/80 rounded-2xl flex items-center justify-between gap-4">
+              <div className="p-4 bg-neutral-50/70 border border-neutral-200/80 rounded-2xl flex items-center justify-between gap-4">
                 <div>
                   <p className="font-bold text-slate-900 text-xs">
                     Broadcast Newly Published Vacancies
@@ -221,7 +228,7 @@ export default function SuperAdminSettingsPage() {
                   type="checkbox"
                   checked={telegramNotificationEnabled}
                   onChange={(e) => setTelegramNotificationEnabled(e.target.checked)}
-                  className="w-4 h-4 accent-[#185DF1] rounded cursor-pointer"
+                  className="w-4 h-4 accent-[#111111] rounded cursor-pointer"
                 />
               </div>
             </div>
@@ -230,7 +237,7 @@ export default function SuperAdminSettingsPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="bg-[#185DF1] hover:bg-[#031130] text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md shadow-blue-500/20 flex items-center gap-2 text-xs disabled:opacity-50"
+                className="bg-[#111111] hover:bg-[#111111] text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md shadow-neutral-500/20 flex items-center gap-2 text-xs disabled:opacity-50"
               >
                 <Save size={16} />
                 <span>{saving ? "Saving settings..." : "Save Platform Configurations"}</span>
