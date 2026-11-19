@@ -115,17 +115,17 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <section className="mx-auto grid max-w-7xl gap-10 px-4 pb-12 pt-6 sm:px-6 md:grid-cols-[1.05fr_0.95fr] md:items-center md:pb-16 md:pt-8 lg:px-8">
+    <div className="min-h-screen bg-transparent">
+      <section className="mx-auto grid max-w-7xl gap-10 px-4 pb-14 pt-10 sm:px-6 md:grid-cols-[1.05fr_0.95fr] md:items-center md:pb-20 md:pt-12 lg:px-8">
         <div>
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3.5 py-2 text-sm font-medium text-neutral-700">
-            <span className="h-2 w-2 rounded-full bg-neutral-900" />
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-900/10 bg-emerald-50 px-3.5 py-2 text-sm font-semibold text-emerald-900">
+            <span className="h-2 w-2 rounded-full bg-emerald-600" />
             Find your next opportunity
           </div>
           <h1 className="max-w-3xl text-4xl font-medium leading-[1.08] tracking-[-0.045em] text-neutral-950 sm:text-5xl lg:text-6xl">
             Get hired faster
             <br />
-            and smarter.
+            and <span className="text-emerald-700">smarter.</span>
           </h1>
           <p className="mt-4 max-w-xl text-base leading-7 text-neutral-500 sm:text-lg">
             Browse, search, and apply for trusted jobs across Ethiopia.
@@ -177,7 +177,7 @@ export default function Home() {
             </label>
             <button
               type="submit"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-neutral-950 px-5 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 focus-visible:outline-offset-2"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-offset-2"
             >
               Search jobs <Search size={16} />
             </button>
@@ -190,8 +190,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative hidden min-h-[390px] items-center justify-center overflow-hidden rounded-[2rem] bg-neutral-50 p-8 md:flex">
-          <div className="absolute right-[12%] top-8 h-[310px] w-[250px] rounded-[48%] bg-neutral-200/80" />
+        <div className="relative hidden min-h-[390px] items-center justify-center overflow-hidden rounded-[2rem] border border-emerald-900/5 bg-gradient-to-br from-emerald-50 via-[#f2f7f0] to-amber-50 p-8 md:flex">
+          <div className="absolute right-[12%] top-8 h-[310px] w-[250px] rounded-[48%] bg-emerald-100/80" />
           <div className="absolute right-[18%] top-14 h-[295px] w-[225px] rounded-[2rem] border border-neutral-200 bg-white p-4 shadow-[0_24px_70px_-38px_rgba(0,0,0,0.3)]">
             <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
               <div className="flex gap-1">
@@ -210,7 +210,7 @@ export default function Home() {
             </div>
             <div className="mt-4 flex items-center justify-between rounded-xl border border-neutral-200 px-3 py-2.5">
               <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-neutral-900 text-white">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-white">
                   <Briefcase size={14} />
                 </span>
                 <span className="text-xs font-medium text-neutral-700">Explore jobs</span>

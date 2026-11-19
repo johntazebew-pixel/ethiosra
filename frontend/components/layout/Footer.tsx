@@ -10,10 +10,10 @@ import { SiteWordmark } from "@/components/layout/BrandingProvider";
 
 export default function Footer() {
   return (
-    <footer className="mt-0 border-t border-neutral-200 bg-white py-10 text-neutral-700">
+    <footer className="mt-0 border-t border-neutral-200/80 bg-white py-12 text-neutral-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="grid grid-cols-1 gap-8 border-b border-neutral-200 pb-8 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 border-b border-neutral-200 pb-10 md:grid-cols-4">
 
           <div className="md:col-span-1">
             <div className="mb-5 flex items-center gap-3">

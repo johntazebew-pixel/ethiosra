@@ -136,7 +136,7 @@ export default function Navbar() {
   const roleMeta = getRoleBadge(user?.role);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-md transition-colors">
+    <nav className="sticky top-0 z-50 border-b border-neutral-200/80 bg-white/90 backdrop-blur-xl transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           
@@ -155,7 +155,7 @@ export default function Navbar() {
               href="/"
               className={`rounded-full px-3.5 py-2 text-sm transition-colors ${
                 pathname === "/"
-                  ? "bg-neutral-50 text-neutral-800 font-semibold"
+              ? "bg-emerald-50 text-emerald-800 font-semibold"
                   : "hover:bg-neutral-100 hover:text-neutral-950"
               }`}
             >
@@ -165,7 +165,7 @@ export default function Navbar() {
               href="/companies"
               className={`rounded-full px-3.5 py-2 text-sm transition-colors ${
                 pathname.startsWith("/companies")
-                  ? "bg-neutral-50 text-neutral-800 font-semibold"
+                  ? "bg-emerald-50 text-emerald-800 font-semibold"
                   : "hover:bg-neutral-100 hover:text-neutral-950"
               }`}
             >
@@ -175,7 +175,7 @@ export default function Navbar() {
               href="/support"
               className={`rounded-full px-3.5 py-2 text-sm transition-colors ${
                 pathname === "/support"
-                  ? "bg-neutral-50 text-neutral-800 font-semibold"
+                  ? "bg-emerald-50 text-emerald-800 font-semibold"
                   : "hover:bg-neutral-100 hover:text-neutral-950"
               }`}
             >
@@ -375,7 +375,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href="/register"
-                  className="bg-gradient-to-r from-[#111111] to-[#2D2D2D] hover:from-[#111111] hover:to-[#111111] text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-neutral-500/20"
+                  className="bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md shadow-emerald-900/15"
                 >
                   Get Started
                 </Link>
@@ -516,7 +516,7 @@ export default function Navbar() {
                 <Link
                   href="/register"
                   onClick={() => setIsOpen(false)}
-                  className="text-center font-bold text-white py-3 bg-[#111111] hover:bg-[#111111] rounded-xl transition-colors text-sm shadow-md shadow-neutral-500/20"
+                  className="text-center font-bold text-white py-3 bg-primary hover:bg-primary/90 rounded-xl transition-colors text-sm shadow-md shadow-emerald-900/15"
                 >
                   Register
                 </Link>

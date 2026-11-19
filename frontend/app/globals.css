@@ -46,41 +46,63 @@
   --radius-2xl: calc(var(--radius) * 1.5);
   --radius-3xl: calc(var(--radius) * 1.75);
   --radius-4xl: calc(var(--radius) * 2);
+  --color-neutral-50: #f5f8f5;
+  --color-neutral-100: #eaf1eb;
+  --color-neutral-200: #dce7de;
+  --color-neutral-300: #c4d4c8;
+  --color-neutral-400: #91a99a;
+  --color-neutral-500: #688271;
+  --color-neutral-600: #4a6755;
+  --color-neutral-700: #345240;
+  --color-neutral-800: #244333;
+  --color-neutral-900: #19382b;
+  --color-neutral-950: #123226;
+  --color-slate-50: #f6f8f6;
+  --color-slate-100: #edf2ee;
+  --color-slate-200: #dfe7e0;
+  --color-slate-300: #c9d6cb;
+  --color-slate-400: #96a99a;
+  --color-slate-500: #6d8071;
+  --color-slate-600: #526656;
+  --color-slate-700: #3c5141;
+  --color-slate-800: #293f30;
+  --color-slate-900: #1c3324;
+  --color-slate-950: #12291b;
 }
 
 :root {
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.16 0 0);
+  --background: #f7f9f6;
+  --foreground: #19382b;
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.16 0 0);
+  --card-foreground: #19382b;
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.16 0 0);
-  --primary: oklch(0.16 0 0);
+  --popover-foreground: #19382b;
+  --primary: #176345;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.96 0 0);
-  --secondary-foreground: oklch(0.23 0 0);
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.48 0 0);
-  --accent: oklch(0.96 0 0);
-  --accent-foreground: oklch(0.23 0 0);
+  --secondary: #eaf1eb;
+  --secondary-foreground: #244333;
+  --muted: #edf2ee;
+  --muted-foreground: #688271;
+  --accent: #eaf1eb;
+  --accent-foreground: #244333;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.91 0 0);
-  --input: oklch(0.91 0 0);
-  --ring: oklch(0.5 0 0);
+  --border: #dce7de;
+  --input: #dce7de;
+  --ring: #37805d;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.75rem;
-  --sidebar: oklch(0.99 0 0);
-  --sidebar-foreground: oklch(0.16 0 0);
-  --sidebar-primary: oklch(0.16 0 0);
+  --sidebar: #f7f9f6;
+  --sidebar-foreground: #19382b;
+  --sidebar-primary: #176345;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.96 0 0);
-  --sidebar-accent-foreground: oklch(0.23 0 0);
-  --sidebar-border: oklch(0.91 0 0);
-  --sidebar-ring: oklch(0.5 0 0);
+  --sidebar-accent: #eaf1eb;
+  --sidebar-accent-foreground: #244333;
+  --sidebar-border: #dce7de;
+  --sidebar-ring: #37805d;
 }
 
 .dark {
@@ -123,8 +145,8 @@
   }
 
   ::selection {
-    background: oklch(0.88 0 0);
-    color: oklch(0.16 0 0);
+    background: #d4e8d9;
+    color: #19382b;
   }
 
   body {
@@ -144,9 +166,70 @@
   }
 
   :focus-visible {
-    outline: 2px solid oklch(0.5 0 0);
+    outline: 2px solid #37805d;
     outline-offset: 2px;
   }
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 10% 0%, rgb(226 239 228 / 34%), transparent 36rem),
+    var(--background);
+}
+
+main input:not([type="checkbox"]):not([type="radio"]),
+main select,
+main textarea {
+  border-radius: 0.8rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+main input:not([type="checkbox"]):not([type="radio"]):focus,
+main select:focus,
+main textarea:focus {
+  border-color: #37805d;
+  box-shadow: 0 0 0 3px rgb(55 128 93 / 14%);
+  outline: none;
+}
+
+main button:not([class~="rounded-full"]) {
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease,
+    box-shadow 160ms ease, transform 160ms ease;
+}
+
+main button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+[class~="bg-[#111111]"] {
+  background-color: #176345 !important;
+}
+
+[class~="hover:bg-[#111111]"]:hover,
+[class~="hover:bg-[#2D2D2D]"]:hover {
+  background-color: #104c36 !important;
+}
+
+[class~="text-[#111111]"] {
+  color: #19382b !important;
+}
+
+[class~="border-[#111111]"] {
+  border-color: #176345 !important;
+}
+
+[class~="bg-[#F7F7F7]"],
+[class~="bg-[#F8FAFC]"] {
+  background-color: #f3f7f3 !important;
+}
+
+[class~="bg-[#F4F4F4]"],
+[class~="bg-[#F5F5F5]"] {
+  background-color: #edf3ee !important;
+}
+
+[class*="bg-gradient-to-br"][class*="from-[#111111]"] {
+  background-image: linear-gradient(135deg, #1d6848, #103d2e) !important;
 }
 
 main > .min-h-screen {
